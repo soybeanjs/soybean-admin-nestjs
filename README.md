@@ -1,5 +1,6 @@
 # soybean-admin-nestjs
-soybean-admin的后端服务nestjs版
+
+soybean-admin 的后端服务 nestjs 版
 
 ## Installation
 
