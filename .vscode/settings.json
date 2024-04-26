@@ -1,0 +1,11 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.experimental.useFlatConfig": true,
+  "editor.formatOnSave": false,
+  "eslint.validate": ["json", "jsonc"],
+  "prettier.enable": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
