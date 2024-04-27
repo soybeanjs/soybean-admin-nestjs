@@ -1,19 +1,20 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "ESNext",
+    "target": "ES2022",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "baseUrl": "./",
-    "module": "ESNext",
+    "module": "ES2022",
     "moduleResolution": "node",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client", "node"],
+    "types": ["node", "vitest/globals"],
     "strict": true,
     "strictBindCallApply": false,
     "strictNullChecks": true,
+    "strictPropertyInitialization": false,
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": false,
     "declaration": true,

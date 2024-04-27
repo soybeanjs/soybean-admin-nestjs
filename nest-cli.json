@@ -4,7 +4,9 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "builder": "swc",
-    "deleteOutDir": true,
-    "typeCheck": true
+    "deleteOutDir": true
+  },
+  "generateOptions": {
+    "baseDir": "modules"
   }
 }
