@@ -1,4 +1,6 @@
 import process from 'node:process';
+import { consola } from 'consola';
+import { blue, lightGreen } from 'kolorist';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -17,6 +19,12 @@ async function bootstrap() {
 
   const port = Number.parseInt(process.env.PORT, 10) || 8080;
   await app.listen(port);
+
+  consola.log('\n');
+  consola.success(lightGreen(`${process.env.APP_NAME} Service is running!`));
+  consola.log('\n');
+  consola.log(lightGreen(`Local: ${blue(`http://localhost:${port}`)}`));
+  consola.log(lightGreen(`Swagger: ${blue(`http://localhost:${port}/api`)}`));
 }
 
 bootstrap();
