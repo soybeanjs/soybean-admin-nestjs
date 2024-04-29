@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
-import type { AppConfig, AppConfigKey } from './types';
+import initConfig from './init';
+import type { AppConfig, AppConfigKey } from './configs.interface';
 
 @Injectable()
 export class ConfigsService {
@@ -15,7 +16,7 @@ export class ConfigsService {
   }
 
   getAll() {
-    const keys: AppConfigKey[] = ['nodeEnv', 'appName', 'http', 'database', 'swagger'];
+    const keys: AppConfigKey[] = Object.keys(initConfig()) as AppConfigKey[];
 
     const config = {} as AppConfig;
 

@@ -1,5 +1,5 @@
 import process from 'node:process';
-import type { AppConfig } from './types';
+import type { AppConfig } from './configs.interface';
 
 function initAppConfig(): AppConfig {
   const appName = process.env.APP_NAME;

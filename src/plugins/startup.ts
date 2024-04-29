@@ -1,6 +1,6 @@
 import { consola } from 'consola';
 import { lightBlue, lightGreen } from 'kolorist';
-import type { AppConfig } from '@/configs/types';
+import type { AppConfig } from '@/configs/configs.interface';
 
 export function setupStartupLog(config: Pick<AppConfig, 'appName' | 'swagger' | 'http'>) {
   const { appName, swagger, http } = config;
