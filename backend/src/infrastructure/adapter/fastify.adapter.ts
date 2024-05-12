@@ -1,4 +1,4 @@
-import { FastifyAdapter } from '@nestjs/platform-fastify';
+import {FastifyAdapter} from '@nestjs/platform-fastify';
 import fastifyMultipart from '@fastify/multipart';
 
 const app: FastifyAdapter = new FastifyAdapter({
@@ -6,6 +6,7 @@ const app: FastifyAdapter = new FastifyAdapter({
 });
 export { app as fastifyApp };
 
+// @ts-ignore
 app.register(fastifyMultipart, {
   limits: {
     fields: 10, // Max number of non-file fields

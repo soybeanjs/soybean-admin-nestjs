@@ -1,14 +1,9 @@
-import {
-  Inject,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { PasswordLoginCommand } from '../../commands/password-login.command';
-import { UserReadRepoPort } from '../../ports/user-read.repo-port';
-import { UserReadRepoPortToken } from '../../constants';
-import { UserModel } from '../../domain/user.model';
-import * as console from 'node:console';
+import {Inject, NotFoundException, UnauthorizedException,} from '@nestjs/common';
+import {CommandHandler, EventPublisher, ICommandHandler} from '@nestjs/cqrs';
+import {PasswordLoginCommand} from '../../commands/password-login.command';
+import {UserReadRepoPort} from '../../ports/user-read.repo-port';
+import {UserReadRepoPortToken} from '../../constants';
+import {UserModel} from '../../domain/user.model';
 
 @CommandHandler(PasswordLoginCommand)
 export class PasswordLoginHandler
@@ -33,6 +28,7 @@ export class PasswordLoginHandler
       throw new UnauthorizedException(loginResult.message);
     }
 
+    this.publisher.mergeObjectContext(userAggregate);
     userAggregate.commit();
   }
 }
