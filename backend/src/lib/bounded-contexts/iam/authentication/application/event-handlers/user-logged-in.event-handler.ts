@@ -1,5 +1,5 @@
-import {EventsHandler, IEventHandler} from '@nestjs/cqrs';
-import {UserLoggedInEvent} from '../../domain/events/user-logged-in.event';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { UserLoggedInEvent } from '../../domain/events/user-logged-in.event';
 
 @EventsHandler(UserLoggedInEvent)
 export class UserLoggedInHandler implements IEventHandler<UserLoggedInEvent> {

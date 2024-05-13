@@ -1,4 +1,4 @@
-import {FastifyAdapter} from '@nestjs/platform-fastify';
+import { FastifyAdapter } from '@nestjs/platform-fastify';
 import fastifyMultipart from '@fastify/multipart';
 
 const app: FastifyAdapter = new FastifyAdapter({
