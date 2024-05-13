@@ -47,6 +47,8 @@ async function bootstrap() {
     }),
   );
 
+  app.setGlobalPrefix('v1');
+
   await app.listen(port, '0.0.0.0', async () => {
     const url = await app.getUrl();
     const { pid } = process;

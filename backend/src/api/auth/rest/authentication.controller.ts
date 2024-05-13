@@ -24,9 +24,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  async getProfile(@Request() req): IAuthentication {
+  async getProfile(@Request() req: any): Promise<IAuthentication> {
     return req.user;
   }
 }

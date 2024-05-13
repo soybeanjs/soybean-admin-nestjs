@@ -5,6 +5,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 
 import { PrismaModule } from './prisma/prisma.module';
+import { CacheManagerModule } from './cache-manager/cache-manager.module';
 
 @Global()
 @Module({
@@ -30,7 +31,8 @@ import { PrismaModule } from './prisma/prisma.module';
     }),
     // prisma
     PrismaModule,
+    CacheManagerModule,
   ],
-  exports: [HttpModule, PrismaModule],
+  exports: [HttpModule, PrismaModule, CacheManagerModule],
 })
 export class SharedModule {}
