@@ -10,10 +10,14 @@ import { JwtStrategy } from '@src/infrastructure/strategies/jwt.passport-strateg
 
 import config, {
   ConfigKeyPaths,
+  IRedisConfig,
   IThrottlerConfig,
+  redisRegToken,
   throttlerConfigToken,
 } from './config';
 import { SharedModule } from '@src/shared/shared.module';
+import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis';
+import { Redis } from 'ioredis';
 
 import { JwtAuthGuard } from '@src/infrastructure/guards/jwt.auth-guard';
 import { CasbinService } from '@src/infrastructure/casbin/casbin.service';
@@ -43,6 +47,31 @@ const strategies = [JwtStrategy];
           configService.get<IThrottlerConfig>(throttlerConfigToken, {
             infer: true,
           });
+
+        const redisOpts = configService.get<IRedisConfig>(redisRegToken, {
+          infer: true,
+        });
+
+        let throttlerStorageRedisService: ThrottlerStorageRedisService;
+
+        switch (redisOpts.mode) {
+          case 'cluster':
+            throttlerStorageRedisService = new ThrottlerStorageRedisService(
+              new Redis.Cluster(redisOpts.cluster),
+            );
+            break;
+          default:
+            throttlerStorageRedisService = new ThrottlerStorageRedisService(
+              new Redis({
+                host: redisOpts.standalone.host,
+                port: redisOpts.standalone.port,
+                password: redisOpts.standalone.password,
+                db: redisOpts.standalone.db,
+              }),
+            );
+            break;
+        }
+
         return {
           errorMessage: errorMessage,
           throttlers: [
@@ -51,6 +80,7 @@ const strategies = [JwtStrategy];
               limit: limit,
             },
           ],
+          storage: throttlerStorageRedisService,
         };
       },
     }),

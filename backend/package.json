@@ -49,6 +49,7 @@
     "dotenv": "^16.4.5",
     "fastify": "^4.27.0",
     "ioredis": "^5.4.1",
+    "nestjs-throttler-storage-redis": "^0.4.4",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.2",

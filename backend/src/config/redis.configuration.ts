@@ -3,11 +3,37 @@ import { getEnvNumber, getEnvString } from '@src/utils/env';
 
 export const redisRegToken = 'redis';
 
-export const RedisConfig = registerAs(redisRegToken, () => ({
-  host: getEnvString('REDIS_HOST', '127.0.0.1'),
-  port: getEnvNumber('REDIS_PORT', 6379),
-  password: getEnvString('REDIS_PASSWORD', ''),
-  db: getEnvNumber('REDIS_DB', 1),
-}));
+export const RedisConfig = registerAs(redisRegToken, () => {
+  return {
+    mode: process.env.REDIS_MODE || 'standalone', // 'standalone', 'cluster', 'sentinel'
+    standalone: {
+      host: getEnvString('REDIS_HOST', 'localhost'),
+      port: getEnvNumber('REDIS_PORT', 6379),
+      password: getEnvString('REDIS_PASSWORD', ''),
+      db: getEnvNumber('REDIS_DB', 5),
+    },
+    cluster: process.env.REDIS_CLUSTER_NODES
+      ? process.env.REDIS_CLUSTER_NODES.split(',').map((node) => {
+          const [host, port] = node.split(':');
+          return {
+            host,
+            port: parseInt(port, 10),
+            password: getEnvString('REDIS_CLUSTER_PASSWORD', ''),
+          };
+        })
+      : [],
+    sentinel: {
+      sentinels: process.env.REDIS_SENTINELS
+        ? process.env.REDIS_SENTINELS.split(',').map((node) => {
+            const [host, port] = node.split(':');
+            return { host, port: parseInt(port, 10) };
+          })
+        : [],
+      name: getEnvString('REDIS_SENTINEL_MASTER_NAME', 'master'),
+      password: getEnvString('REDIS_SENTINEL_PASSWORD', ''),
+      db: getEnvNumber('REDIS_SENTINEL_DB', 5),
+    },
+  };
+});
 
 export type IRedisConfig = ConfigType<typeof RedisConfig>;
