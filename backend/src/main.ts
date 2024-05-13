@@ -13,6 +13,7 @@ import { useContainer } from 'class-validator';
 import { ConfigKeyPaths, IAppConfig } from '@src/config';
 import { isMainProcess } from '@src/utils/env';
 import { fastifyApp } from '@src/infrastructure/adapter/fastify.adapter';
+import fastifyCompress from '@fastify/compress';
 
 import { AppModule } from './app.module';
 
@@ -48,6 +49,9 @@ async function bootstrap() {
   );
 
   app.setGlobalPrefix('v1');
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  await app.register(fastifyCompress);
 
   await app.listen(port, '0.0.0.0', async () => {
     const url = await app.getUrl();
