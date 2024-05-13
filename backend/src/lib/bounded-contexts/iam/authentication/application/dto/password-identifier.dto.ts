@@ -1,6 +1,4 @@
-import { ICommand } from '@nestjs/cqrs';
-
-export class PasswordLoginCommand implements ICommand {
+export class PasswordIdentifierDTO {
   constructor(
     public readonly identifier: string,
     public readonly password: string,

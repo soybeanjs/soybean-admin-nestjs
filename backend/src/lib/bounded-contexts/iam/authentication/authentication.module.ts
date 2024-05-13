@@ -1,6 +1,7 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { PubSubCommandHandlers } from './application/command-handlers';
 import { EventHandlers } from './application/event-handlers';
+import { Services } from './application/service';
 
 @Module({})
 export class AuthenticationModule {
@@ -14,9 +15,10 @@ export class AuthenticationModule {
       providers: [
         ...PubSubCommandHandlers,
         ...EventHandlers,
+        ...Services,
         ...options.inject,
       ],
-      exports: [...PubSubCommandHandlers, ...EventHandlers],
+      exports: [...Services],
     };
   }
 }

@@ -6,6 +6,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 
 import { GlobalCqrsModule } from '@src/global/module/global.module';
 
+import { JwtStrategy } from '@src/infrastructure/strategies/jwt.passport-strategy';
+
 import config, {
   ConfigKeyPaths,
   IThrottlerConfig,
@@ -13,11 +15,15 @@ import config, {
 } from './config';
 import { SharedModule } from '@src/shared/shared.module';
 
+import { JwtAuthGuard } from '@src/infrastructure/guards/jwt.auth-guard';
+
 import { ApiModule } from '@src/api/api.module';
 
 //nest init
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+
+const strategies = [JwtStrategy];
 
 @Module({
   imports: [
@@ -68,8 +74,11 @@ import { AppService } from './app.service';
   providers: [
     AppService,
 
+    ...strategies,
+
     { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
 
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: ThrottlerGuard },
   ],
 })
