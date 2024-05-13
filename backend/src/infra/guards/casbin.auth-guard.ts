@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { CasbinService } from '@src/infrastructure/casbin/casbin.service';
+import { CasbinService } from '@src/infra/casbin/casbin.service';
 import { Reflector } from '@nestjs/core';
-import { IS_PUBLIC_KEY } from '@src/infrastructure/decorators/public.decorator';
+import { IS_PUBLIC_KEY } from '@src/infra/decorators/public.decorator';
 
 @Injectable()
 export class CasbinGuard implements CanActivate {

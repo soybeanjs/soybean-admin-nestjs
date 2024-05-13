@@ -12,7 +12,7 @@ import { useContainer } from 'class-validator';
 
 import { ConfigKeyPaths, IAppConfig } from '@src/config';
 import { isMainProcess } from '@src/utils/env';
-import { fastifyApp } from '@src/infrastructure/adapter/fastify.adapter';
+import { fastifyApp } from '@src/infra/adapter/fastify.adapter';
 import fastifyCompress from '@fastify/compress';
 
 import { AppModule } from './app.module';

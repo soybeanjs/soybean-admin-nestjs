@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Enforcer, newEnforcer } from 'casbin';
-import { PrismaAdapter } from '@src/infrastructure/adapter/casbin-prisma.adapter';
+import { PrismaAdapter } from '@src/infra/adapter/casbin-prisma.adapter';
 
 @Injectable()
 export class CasbinService implements OnModuleInit {
@@ -9,7 +9,7 @@ export class CasbinService implements OnModuleInit {
   async onModuleInit(): Promise<void> {
     const adapter = await PrismaAdapter.newAdapter();
     this.enforcer = await newEnforcer(
-      'src/infrastructure/casbin/config/model.conf',
+      'src/infra/casbin/config/model.conf',
       adapter,
     );
   }

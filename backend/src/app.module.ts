@@ -6,7 +6,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 
 import { GlobalCqrsModule } from '@src/global/module/global.module';
 
-import { JwtStrategy } from '@src/infrastructure/strategies/jwt.passport-strategy';
+import { JwtStrategy } from '@src/infra/strategies/jwt.passport-strategy';
 
 import config, {
   ConfigKeyPaths,
@@ -19,9 +19,9 @@ import { SharedModule } from '@src/shared/shared.module';
 import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis';
 import { Redis } from 'ioredis';
 
-import { JwtAuthGuard } from '@src/infrastructure/guards/jwt.auth-guard';
-import { CasbinService } from '@src/infrastructure/casbin/casbin.service';
-import { CasbinGuard } from '@src/infrastructure/guards/casbin.auth-guard';
+import { JwtAuthGuard } from '@src/infra/guards/jwt.auth-guard';
+import { CasbinService } from '@src/infra/casbin/casbin.service';
+import { CasbinGuard } from '@src/infra/guards/casbin.auth-guard';
 
 import { ApiModule } from '@src/api/api.module';
 

@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { PasswordLoginDTO } from '../dto/password-login.dto';
 import { AuthenticationService } from '@src/lib/bounded-contexts/iam/authentication/application/service/authentication.service';
 import { PasswordIdentifierDTO } from '@src/lib/bounded-contexts/iam/authentication/application/dto/password-identifier.dto';
-import { Public } from '@src/infrastructure/decorators/public.decorator';
+import { Public } from '@src/infra/decorators/public.decorator';
 
 @ApiTags('Auth - 认证模块')
 @Controller('auth')
