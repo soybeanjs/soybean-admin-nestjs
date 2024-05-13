@@ -21,6 +21,20 @@ CREATE TABLE "sys_users" (
     CONSTRAINT "sys_users_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "casbin_rule" (
+    "id" SERIAL NOT NULL,
+    "ptype" TEXT NOT NULL,
+    "v0" TEXT,
+    "v1" TEXT,
+    "v2" TEXT,
+    "v3" TEXT,
+    "v4" TEXT,
+    "v5" TEXT,
+
+    CONSTRAINT "casbin_rule_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "sys_users_username_key" ON "sys_users"("username");
 
