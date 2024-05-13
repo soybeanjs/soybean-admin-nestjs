@@ -1,17 +1,14 @@
+import {Body, Controller, Get, Post, Request} from '@nestjs/common';
+import {CommandBus} from '@nestjs/cqrs';
+import {ApiTags} from '@nestjs/swagger';
+import {PasswordLoginDTO} from '../dto/password-login.dto';
 import {
-  Body,
-  Controller,
-  Get,
-  Request,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { ApiTags } from '@nestjs/swagger';
-import { PasswordLoginDTO } from '../dto/password-login.dto';
-import { AuthenticationService } from '@src/lib/bounded-contexts/iam/authentication/application/service/authentication.service';
-import { PasswordIdentifierDTO } from '@src/lib/bounded-contexts/iam/authentication/application/dto/password-identifier.dto';
-import { Public } from '@src/infrastructure/decorators/public.decorator';
+  AuthenticationService
+} from '@src/lib/bounded-contexts/iam/authentication/application/service/authentication.service';
+import {
+  PasswordIdentifierDTO
+} from '@src/lib/bounded-contexts/iam/authentication/application/dto/password-identifier.dto';
+import {Public} from '@src/infrastructure/decorators/public.decorator';
 
 @ApiTags('Auth - 认证模块')
 @Controller('auth')
@@ -31,7 +28,8 @@ export class AuthController {
   }
 
   @Get('profile')
-  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   async getProfile(@Request() req): IAuthentication {
     return req.user;
   }
