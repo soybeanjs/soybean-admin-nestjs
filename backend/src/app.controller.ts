@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Query,
   Req,
   UseGuards,
   UseInterceptors,
@@ -15,6 +16,7 @@ import {
   AuthZGuard,
   UsePermissions,
 } from '@src/infra/casbin';
+import { RedisUtility } from '@src/shared/redis/services/redis.util';
 
 @Controller()
 export class AppController {
@@ -53,5 +55,13 @@ export class AppController {
   @Get('users/me')
   async me(@Req() req: any) {
     return req.user;
+  }
+
+  private readonly redisClient = RedisUtility.client();
+
+  @Get('redis')
+  async redis(@Query('val') val: string) {
+    await RedisUtility.instance.set(`key_${val}`, val);
+    return RedisUtility.instance.get(`key_${val}`);
   }
 }
