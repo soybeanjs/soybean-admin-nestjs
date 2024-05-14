@@ -7,7 +7,6 @@ const app: FastifyAdapter = new FastifyAdapter({
 export { app as fastifyApp };
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 app.register(fastifyMultipart, {
   limits: {
     fields: 10, // Max number of non-file fields

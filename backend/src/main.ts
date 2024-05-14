@@ -50,7 +50,6 @@ async function bootstrap() {
 
   app.setGlobalPrefix('v1');
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   await app.register(fastifyCompress);
 
   await app.listen(port, '0.0.0.0', async () => {

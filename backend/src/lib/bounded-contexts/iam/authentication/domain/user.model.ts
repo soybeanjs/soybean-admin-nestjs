@@ -2,7 +2,6 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { Status } from '@prisma/client';
 import { UserLoggedInEvent } from './events/user-logged-in.event';
 import { UserProperties } from './user.read-model';
-import * as console from 'node:console';
 
 export interface IUser {
   verifyPassword(password: string): boolean;

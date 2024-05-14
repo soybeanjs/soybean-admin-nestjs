@@ -1,7 +1,7 @@
 declare global {
   interface IAuthentication {
-    uid: String;
-    username: String;
+    uid: string;
+    username: string;
   }
 }
 

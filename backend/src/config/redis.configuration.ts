@@ -9,7 +9,7 @@ export const RedisConfig = registerAs(redisRegToken, () => {
     standalone: {
       host: getEnvString('REDIS_HOST', 'localhost'),
       port: getEnvNumber('REDIS_PORT', 6379),
-      password: getEnvString('REDIS_PASSWORD', ''),
+      password: getEnvString('REDIS_PASSWORD', '123456'),
       db: getEnvNumber('REDIS_DB', 5),
     },
     cluster: process.env.REDIS_CLUSTER_NODES
