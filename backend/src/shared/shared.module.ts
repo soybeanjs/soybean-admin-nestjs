@@ -14,12 +14,15 @@ import { CacheManagerModule } from './cache-manager/cache-manager.module';
     // schedule
     ScheduleModule.forRoot(),
     EventEmitterModule.forRoot({
-      wildcard: true,
-      delimiter: '.',
-      newListener: false,
-      removeListener: false,
-      maxListeners: 20,
-      ignoreErrors: false,
+      wildcard: process.env.EVENT_EMITTER_WILDCARD === 'true',
+      delimiter: process.env.EVENT_EMITTER_DELIMITER || '.',
+      newListener: process.env.EVENT_EMITTER_NEW_LISTENER === 'true',
+      removeListener: process.env.EVENT_EMITTER_REMOVE_LISTENER === 'true',
+      maxListeners: parseInt(
+        process.env.EVENT_EMITTER_MAX_LISTENERS || '20',
+        10,
+      ),
+      ignoreErrors: process.env.EVENT_EMITTER_IGNORE_ERRORS === 'true',
     }),
     // prisma
     PrismaModule,
