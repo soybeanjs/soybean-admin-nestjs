@@ -14,6 +14,7 @@ import { ConfigKeyPaths, IAppConfig } from '@src/config';
 import { isMainProcess } from '@src/utils/env';
 import { fastifyApp } from '@src/infra/adapter/fastify.adapter';
 import fastifyCompress from '@fastify/compress';
+import { initDocSwagger } from '@src/bootstrap/swagger/init-doc.swagger';
 
 import { AppModule } from './app.module';
 
@@ -49,7 +50,9 @@ async function bootstrap() {
   );
 
   app.setGlobalPrefix('v1');
+  initDocSwagger(app, configService);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   await app.register(fastifyCompress);
 
   await app.listen(port, '0.0.0.0', async () => {

@@ -2,7 +2,11 @@
   "name": "backend",
   "version": "0.0.1",
   "description": "",
-  "author": "ByteByteBrew",
+  "author": {
+    "name": "ByteByteBrew",
+    "email": "wang1571339199@gmail.com",
+    "url": "https://github.com/ByteByteBrew/soybean-admin-nest"
+  },
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -26,6 +30,7 @@
   "dependencies": {
     "@fastify/compress": "^7.0.3",
     "@fastify/multipart": "^8.2.0",
+    "@fastify/static": "^7.0.4",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/cache-manager": "^2.2.2",
     "@nestjs/common": "^10.3.8",
