@@ -5,6 +5,7 @@ export type UserEssentialProperties = Readonly<
     id: string;
     username: string;
     status: Status;
+    org_code: string;
   }>
 >;
 

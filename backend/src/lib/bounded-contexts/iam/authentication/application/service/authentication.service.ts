@@ -40,14 +40,19 @@ export class AuthenticationService {
     this.publisher.mergeObjectContext(userAggregate);
     userAggregate.commit();
 
-    return this.generateAccessToken(user.id, user.username);
+    return this.generateAccessToken(user.id, user.username, user.org_code);
   }
 
   private async generateAccessToken(
     userId: string,
     username: string,
+    org_code: string,
   ): Promise<{ accessToken: string; refreshToken: string }> {
-    const payload: IAuthentication = { uid: userId, username: username };
+    const payload: IAuthentication = {
+      uid: userId,
+      username: username,
+      domain: org_code,
+    };
     const accessToken = await this.jwtService.signAsync(payload);
     const refreshToken = await this.jwtService.signAsync(payload, {
       secret: this.securityConfig.refreshJwtSecret,

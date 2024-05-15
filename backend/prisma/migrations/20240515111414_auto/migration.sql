@@ -6,9 +6,9 @@ CREATE TABLE "sys_user" (
     "id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "org_code" TEXT NOT NULL,
     "built_in" BOOLEAN NOT NULL DEFAULT false,
     "avatar" TEXT,
-    "department_id" INTEGER,
     "email" TEXT,
     "phone_number" TEXT,
     "nike_name" TEXT NOT NULL,
@@ -73,6 +73,22 @@ CREATE TABLE "sys_resource" (
     CONSTRAINT "sys_resource_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "sys_organization" (
+    "id" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "pid" TEXT NOT NULL DEFAULT '0',
+    "status" "Status" NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_by" TEXT NOT NULL,
+    "updated_at" TIMESTAMP(3),
+    "updated_by" TEXT,
+
+    CONSTRAINT "sys_organization_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "sys_user_username_key" ON "sys_user"("username");
 
@@ -84,3 +100,6 @@ CREATE UNIQUE INDEX "sys_user_phone_number_key" ON "sys_user"("phone_number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "sys_role_code_key" ON "sys_role"("code");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sys_organization_code_key" ON "sys_organization"("code");

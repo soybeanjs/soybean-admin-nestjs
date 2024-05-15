@@ -6,9 +6,3 @@ export enum AuthActionVerb {
 }
 
 export type CustomAuthActionVerb = string;
-
-export enum AuthPossession {
-  ANY = 'any',
-  OWN = 'own',
-  OWN_ANY = 'own|any',
-}

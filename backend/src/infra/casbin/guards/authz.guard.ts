@@ -13,7 +13,6 @@ import {
 import * as casbin from 'casbin';
 import { Permission, AuthZModuleOptions } from '../interfaces';
 import { UnauthorizedException } from '@nestjs/common';
-import { AuthPossession } from '../casbin';
 import { RedisUtility } from '@src/shared/redis/services/redis.util';
 import { CacheConstant } from '@src/constants/cache.constant';
 
@@ -36,21 +35,27 @@ export class AuthZGuard implements CanActivate {
         return true;
       }
 
-      const userId = this.options.uidFromContext(context);
+      const user = this.options.userFromContext(context);
 
-      if (!userId) {
+      if (!user) {
         throw new UnauthorizedException();
       }
 
+      await this.enforcer.loadPolicy();
       const userRoles = await RedisUtility.instance.smembers(
-        `${CacheConstant.AUTH_TOKEN_PREFIX}${userId}`,
+        `${CacheConstant.AUTH_TOKEN_PREFIX}${user.uid}`,
       );
+
+      if (userRoles && !(userRoles.length > 0)) {
+        return false;
+      }
 
       const result = await AuthZGuard.asyncEvery<Permission>(
         permissions,
         async (permission) =>
           this.hasPermission(
             new Set(userRoles),
+            user.domain,
             permission,
             context,
             this.enforcer,
@@ -65,27 +70,15 @@ export class AuthZGuard implements CanActivate {
 
   async hasPermission(
     roles: Set<string>,
+    domain: string,
     permission: Permission,
     context: ExecutionContext,
     enforcer: casbin.Enforcer,
   ): Promise<boolean> {
-    const { possession, resource, action } = permission;
-    const poss = [];
+    const { resource, action } = permission;
 
-    if (possession === AuthPossession.OWN_ANY) {
-      poss.push(AuthPossession.ANY, AuthPossession.OWN);
-    } else {
-      poss.push(possession);
-    }
-
-    return AuthZGuard.asyncSome<AuthPossession>(poss, async (p) => {
-      if (p === AuthPossession.OWN) {
-        return (permission as any).isOwn(context);
-      } else {
-        return AuthZGuard.asyncSome<string>(Array.from(roles), async (role) => {
-          return enforcer.enforce(role, resource, `${action}:${p}`);
-        });
-      }
+    return AuthZGuard.asyncSome<string>(Array.from(roles), async (role) => {
+      return enforcer.enforce(role, resource, action, domain);
     });
   }
 

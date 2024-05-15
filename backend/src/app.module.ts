@@ -61,10 +61,10 @@ const strategies = [JwtStrategy];
         },
         inject: [ConfigService],
       },
-      uidFromContext: (ctx: ExecutionContext) => {
+      userFromContext: (ctx: ExecutionContext) => {
         const request = ctx.switchToHttp().getRequest();
         const user: IAuthentication = request.user;
-        return user && user.uid;
+        return user;
       },
     }),
     ThrottlerModule.forRootAsync({

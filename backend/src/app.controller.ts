@@ -10,12 +10,7 @@ import { AppService } from './app.service';
 import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { ApiOperation } from '@nestjs/swagger';
-import {
-  AuthActionVerb,
-  AuthPossession,
-  AuthZGuard,
-  UsePermissions,
-} from '@src/infra/casbin';
+import { AuthActionVerb, AuthZGuard, UsePermissions } from '@src/infra/casbin';
 import { RedisUtility } from '@src/shared/redis/services/redis.util';
 
 @Controller()
@@ -43,7 +38,6 @@ export class AppController {
   @UsePermissions({
     action: AuthActionVerb.READ,
     resource: 'users_list',
-    possession: AuthPossession.ANY,
   })
   async users() {
     return 'users';

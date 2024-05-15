@@ -15,6 +15,7 @@ export class UserModel extends AggregateRoot implements IUser {
   private username: string;
   private password: string;
   private status: Status;
+  private org_code: string;
 
   constructor(properties: UserProperties) {
     super();

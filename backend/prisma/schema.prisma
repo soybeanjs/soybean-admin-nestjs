@@ -16,20 +16,20 @@ datasource db {
 
 // 用户表
 model sys_user {
-  id            String    @id
-  username      String    @unique
-  password      String
-  built_in      Boolean   @default(false)
-  avatar        String?
-  department_id Int?
-  email         String?   @unique
-  phone_number  String?   @unique
-  nike_name     String
-  status        Status
-  created_at    DateTime  @default(now())
-  created_by    String
-  updated_at    DateTime? @updatedAt
-  updated_by    String?
+  id           String    @id
+  username     String    @unique
+  password     String
+  org_code     String
+  built_in     Boolean   @default(false)
+  avatar       String?
+  email        String?   @unique
+  phone_number String?   @unique
+  nike_name    String
+  status       Status
+  created_at   DateTime  @default(now())
+  created_by   String
+  updated_at   DateTime? @updatedAt
+  updated_by   String?
 }
 
 enum Status {
@@ -83,4 +83,19 @@ model sys_resource {
   created_by String
   updated_at DateTime? @updatedAt
   updated_by String?
+}
+
+model sys_organization {
+  id          String    @id
+  code        String    @unique
+  name        String
+  description String?
+  pid         String    @default("0")
+  status      Status
+  created_at  DateTime  @default(now())
+  created_by  String
+  updated_at  DateTime? @updatedAt
+  updated_by  String?
+
+  @@map("sys_organization")
 }
