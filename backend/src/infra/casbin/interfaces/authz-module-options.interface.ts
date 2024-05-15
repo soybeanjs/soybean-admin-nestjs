@@ -9,7 +9,7 @@ import {
 export interface AuthZModuleOptions<T = any> {
   model?: string;
   policy?: string | Promise<T>;
-  usernameFromContext: (context: ExecutionContext) => string;
+  uidFromContext: (context: ExecutionContext) => string;
   enforcerProvider?: Provider<any>;
   /**
    * Optional list of imported modules that export the providers which are

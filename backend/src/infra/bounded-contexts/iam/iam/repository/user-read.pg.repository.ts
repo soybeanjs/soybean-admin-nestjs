@@ -10,7 +10,7 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
   async findUserByIdentifier(
     identifier: string,
   ): Promise<UserProperties | null> {
-    return this.prisma.user.findFirst({
+    return this.prisma.sys_user.findFirst({
       where: {
         OR: [
           { username: identifier },

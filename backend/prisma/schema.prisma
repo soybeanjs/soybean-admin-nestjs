@@ -14,7 +14,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+// 用户表
+model sys_user {
   id            String    @id
   username      String    @unique
   password      String
@@ -29,8 +30,6 @@ model User {
   created_by    String
   updated_at    DateTime? @updatedAt
   updated_by    String?
-
-  @@map("sys_users")
 }
 
 enum Status {
@@ -39,6 +38,7 @@ enum Status {
   BANNED
 }
 
+// casbin_rule
 model CasbinRule {
   id    Int     @id @default(autoincrement())
   ptype String
@@ -50,4 +50,37 @@ model CasbinRule {
   v5    String?
 
   @@map("casbin_rule")
+}
+
+// 角色表
+model sys_role {
+  id          String    @id
+  code        String    @unique
+  name        String
+  description String?
+  pid         String    @default("0")
+  status      Status
+  created_at  DateTime  @default(now())
+  created_by  String
+  updated_at  DateTime? @updatedAt
+  updated_by  String?
+}
+
+model sys_user_role {
+  userId String
+  roleId String
+
+  @@id([userId, roleId])
+}
+
+// 资源表
+model sys_resource {
+  id         String    @id
+  action     String
+  resource   String
+  possession String
+  created_at DateTime  @default(now())
+  created_by String
+  updated_at DateTime? @updatedAt
+  updated_by String?
 }
