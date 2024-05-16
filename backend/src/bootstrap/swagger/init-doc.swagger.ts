@@ -3,8 +3,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Response } from '@src/infra/rest/res.response';
 import { ConfigService } from '@nestjs/config';
 import { appConfigToken, ConfigKeyPaths, IAppConfig } from '@src/config';
-import * as process from 'node:process';
 import * as packageJson from '../../../package.json';
+import chalk from 'chalk';
+import gradient from 'gradient-string';
 
 export function initDocSwagger(
   app: INestApplication,
@@ -15,7 +16,7 @@ export function initDocSwagger(
       infer: true,
     });
 
-  if (!docSwaggerEnable && process.env.NODE_ENV == 'dev') return;
+  if (!docSwaggerEnable) return;
 
   const documentBuilder = new DocumentBuilder()
     .setTitle('Soybean Admin NestJS Backend API')
@@ -53,5 +54,29 @@ export function initDocSwagger(
   });
 
   const logger = new Logger('SwaggerModule');
-  logger.log(`Document running on http://127.0.0.1:${port}/${docSwaggerPath}`);
+  const message = `Swagger Document running on http://127.0.0.1:${port}/${docSwaggerPath}`;
+  fancyLog(message, logger);
+}
+
+function fancyLog(message: string, logger: Logger) {
+  const rainbow = gradient(
+    'red',
+    'orange',
+    'yellow',
+    'green',
+    'blue',
+    'indigo',
+    'violet',
+  );
+
+  const messageLength = message.length;
+  const border = '*'.repeat(messageLength + 10);
+
+  const coloredBorder = rainbow(border);
+
+  const styledMessage = chalk.bold(`**** ${rainbow(message)} ****`);
+
+  logger.log(coloredBorder);
+  logger.log(styledMessage);
+  logger.log(coloredBorder);
 }

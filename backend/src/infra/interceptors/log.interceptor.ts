@@ -10,12 +10,16 @@ import { tap } from 'rxjs/operators';
 import { Reflector } from '@nestjs/core';
 import { LOG_KEY } from '@src/infra/decorators/log.decorator';
 import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class LogInterceptor implements NestInterceptor {
   private readonly logger = new Logger(LogInterceptor.name);
 
-  constructor(private reflector: Reflector) {}
+  constructor(
+    private reflector: Reflector,
+    private eventEmitter: EventEmitter2,
+  ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
@@ -58,7 +62,9 @@ export class LogInterceptor implements NestInterceptor {
           duration: endTime - startTime,
         };
 
-        this.logger.log(JSON.stringify(logEntry));
+        setImmediate(() => {
+          this.eventEmitter.emit('log.logEntry', logEntry);
+        });
       }),
     );
   }
