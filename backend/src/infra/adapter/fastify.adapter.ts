@@ -2,7 +2,7 @@ import { FastifyAdapter } from '@nestjs/platform-fastify';
 import fastifyMultipart from '@fastify/multipart';
 import { Logger } from '@nestjs/common';
 import { ulid } from 'ulid';
-import { X_REQUEST_ID } from '@src/constants/rest.constant';
+import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
 
 const app: FastifyAdapter = new FastifyAdapter({
   logger: false,
@@ -27,7 +27,7 @@ app.getInstance().addHook('onRequest', async (request) => {
 
 app.getInstance().addHook('onError', async (request, reply) => {
   const ip = request.ip;
-  const userAgent = request.headers['user-agent'];
+  const userAgent = request.headers[USER_AGENT];
   const url = request.url;
 
   Logger.log(`NotFound: IP:${ip}, UA+${userAgent}, URL=${url}`);

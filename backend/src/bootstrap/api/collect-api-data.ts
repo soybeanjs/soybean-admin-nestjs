@@ -7,6 +7,12 @@ import {
 import { ModulesContainer, Reflector } from '@nestjs/core';
 import { Module } from '@nestjs/core/injector/module';
 import { PERMISSIONS_METADATA } from '@src/infra/casbin';
+import {
+  FUNCTION,
+  METHOD,
+  PATH,
+  SWAGGER_API_OPERATION,
+} from '@src/constants/rest.constant';
 
 @Injectable()
 export class ApiDataService implements OnModuleInit {
@@ -27,14 +33,14 @@ export class ApiDataService implements OnModuleInit {
         const prototype = Object.getPrototypeOf(instance);
         const controllerName = controller.metatype.name;
         const controllerPath =
-          Reflect.getMetadata('path', controller.metatype) || '';
+          Reflect.getMetadata(PATH, controller.metatype) || '';
 
         Object.getOwnPropertyNames(prototype)
-          .filter((method) => typeof instance[method] === 'function')
+          .filter((method) => typeof instance[method] === FUNCTION)
           .forEach((method) => {
             const methodPath =
-              Reflect.getMetadata('path', instance[method]) || '';
-            const methodType = Reflect.getMetadata('method', instance[method]);
+              Reflect.getMetadata(PATH, instance[method]) || '';
+            const methodType = Reflect.getMetadata(METHOD, instance[method]);
             if (methodType === undefined) return;
 
             const permissions = this.reflector.get(
@@ -42,7 +48,7 @@ export class ApiDataService implements OnModuleInit {
               instance[method],
             );
             const apiOperation = this.reflector.get(
-              'swagger/apiOperation',
+              SWAGGER_API_OPERATION,
               instance[method],
             );
 
