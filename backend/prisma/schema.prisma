@@ -99,3 +99,19 @@ model sys_organization {
 
   @@map("sys_organization")
 }
+
+model sys_login_log {
+  id         String   @id @default(cuid())
+  user_id    String
+  username   String
+  org_code   String
+  login_time DateTime @default(now())
+  ip         String
+  port       Int?
+  address    String
+  user_agent String
+  request_id String
+  type       String
+  created_at DateTime @default(now())
+  created_by String
+}

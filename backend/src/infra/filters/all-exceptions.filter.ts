@@ -11,6 +11,7 @@ import {
   ErrorMessages,
 } from '@src/shared/errors/error-code.enum';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { X_REQUEST_ID } from '@src/constants/rest.constant';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -19,7 +20,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest<FastifyRequest>();
 
-    const requestId = request.headers['x-request-id'] as string;
+    const requestId = request.headers[X_REQUEST_ID] as string;
     const timestamp = new Date().toISOString();
     const path = request.routeOptions.url ?? '';
 

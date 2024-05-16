@@ -1,37 +1,39 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Status } from '@prisma/client';
-import { UserLoggedInEvent } from './events/user-logged-in.event';
 import { UserProperties } from './user.read-model';
+import { Password } from './password.value-object';
 
 export interface IUser {
-  verifyPassword(password: string): boolean;
-  canLogin(): boolean;
-  loginUser(password: string): { success: boolean; message: string };
+  verifyPassword(password: string): Promise<boolean>;
+  canLogin(): Promise<boolean>;
+  loginUser(password: string): Promise<{ success: boolean; message: string }>;
   commit(): void;
 }
 
 export class UserModel extends AggregateRoot implements IUser {
   private readonly id: string;
   private username: string;
-  private password: string;
+  private password: Password;
   private status: Status;
   private org_code: string;
 
   constructor(properties: UserProperties) {
     super();
     Object.assign(this, properties);
+    this.password = Password.fromHashed(properties.password);
   }
 
-  verifyPassword(password: string): boolean {
-    // Suppose some hashing function is used
-    return this.password === password;
+  async verifyPassword(password: string): Promise<boolean> {
+    return this.password.compare(password);
   }
 
-  canLogin(): boolean {
+  async canLogin(): Promise<boolean> {
     return this.status === Status.ENABLED;
   }
 
-  loginUser(password: string): { success: boolean; message: string } {
+  async loginUser(
+    password: string,
+  ): Promise<{ success: boolean; message: string }> {
     if (this.status !== Status.ENABLED) {
       return {
         success: false,
@@ -39,11 +41,11 @@ export class UserModel extends AggregateRoot implements IUser {
       };
     }
 
-    if (!this.verifyPassword(password)) {
+    const isPasswordValid = await this.verifyPassword(password);
+    if (!isPasswordValid) {
       return { success: false, message: 'Invalid credentials.' };
     }
 
-    this.apply(new UserLoggedInEvent(this.id));
     return { success: true, message: 'Login successful' };
   }
 }

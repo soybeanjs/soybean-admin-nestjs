@@ -11,6 +11,7 @@ import { UserReadRepoPortToken } from '../../constants';
 import { UserReadRepoPort } from '../../ports/user-read.repo-port';
 import { UserModel } from '../../domain/user.model';
 import { PasswordIdentifierDTO } from '../../application/dto/password-identifier.dto';
+import { UserLoggedInEvent } from '../../domain/events/user-logged-in.event';
 
 @Injectable()
 export class AuthenticationService {
@@ -31,16 +32,35 @@ export class AuthenticationService {
       throw new NotFoundException('User not found.');
     }
     const userAggregate = new UserModel(user);
-    const loginResult = userAggregate.loginUser(password);
+    const loginResult = await userAggregate.loginUser(password);
 
     if (!loginResult.success) {
       throw new UnauthorizedException(loginResult.message);
     }
 
+    const tokens = await this.generateAccessToken(
+      user.id,
+      user.username,
+      user.org_code,
+    );
+
+    userAggregate.apply(
+      new UserLoggedInEvent(
+        user.id,
+        user.username,
+        user.org_code,
+        dto.ip,
+        dto.address,
+        dto.userAgent,
+        dto.requestId,
+        dto.type,
+        dto.port,
+      ),
+    );
     this.publisher.mergeObjectContext(userAggregate);
     userAggregate.commit();
 
-    return this.generateAccessToken(user.id, user.username, user.org_code);
+    return tokens;
   }
 
   private async generateAccessToken(

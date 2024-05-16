@@ -1,10 +1,31 @@
+import { Inject } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { UserLoggedInEvent } from '../../domain/events/user-logged-in.event';
+import { LoginLogWriteRepoPort } from '../../ports/login-log-write.repo-port';
+import { LoginLogEntity } from '../../domain/login-log.entity';
+import { LoginLogWriteRepoPortToken } from '../../constants';
 
 @EventsHandler(UserLoggedInEvent)
 export class UserLoggedInHandler implements IEventHandler<UserLoggedInEvent> {
+  constructor(
+    @Inject(LoginLogWriteRepoPortToken)
+    private readonly loginLogWriteRepo: LoginLogWriteRepoPort,
+  ) {}
+
   async handle(event: UserLoggedInEvent) {
-    console.log(`User logged in: ${event.userId}`);
-    // 这里可以添加更多逻辑，如更新用户最后登录时间，发送登录通知等
+    const loginLog = new LoginLogEntity(
+      event.userId,
+      event.username,
+      event.orgCode,
+      event.ip,
+      event.address,
+      event.userAgent,
+      event.requestId,
+      event.type,
+      event.userId,
+      event.port,
+    );
+
+    return await this.loginLogWriteRepo.save(loginLog);
   }
 }

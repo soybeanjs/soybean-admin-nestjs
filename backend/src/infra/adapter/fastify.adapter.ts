@@ -2,6 +2,7 @@ import { FastifyAdapter } from '@nestjs/platform-fastify';
 import fastifyMultipart from '@fastify/multipart';
 import { Logger } from '@nestjs/common';
 import { ulid } from 'ulid';
+import { X_REQUEST_ID } from '@src/constants/rest.constant';
 
 const app: FastifyAdapter = new FastifyAdapter({
   logger: false,
@@ -19,8 +20,8 @@ app.register(fastifyMultipart, {
 });
 
 app.getInstance().addHook('onRequest', async (request) => {
-  if (!request.headers['x-request-id']) {
-    request.headers['x-request-id'] = ulid();
+  if (!request.headers[X_REQUEST_ID]) {
+    request.headers[X_REQUEST_ID] = ulid();
   }
 });
 
