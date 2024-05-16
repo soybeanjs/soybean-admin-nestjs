@@ -46,7 +46,7 @@ export class AuthZGuard implements CanActivate {
         `${CacheConstant.AUTH_TOKEN_PREFIX}${user.uid}`,
       );
 
-      if (userRoles && !(userRoles.length > 0)) {
+      if (userRoles && userRoles.length <= 0) {
         return false;
       }
 

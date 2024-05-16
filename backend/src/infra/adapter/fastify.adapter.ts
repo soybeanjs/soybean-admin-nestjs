@@ -1,6 +1,7 @@
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import fastifyMultipart from '@fastify/multipart';
 import { Logger } from '@nestjs/common';
+import { ulid } from 'ulid';
 
 const app: FastifyAdapter = new FastifyAdapter({
   logger: false,
@@ -15,6 +16,12 @@ app.register(fastifyMultipart, {
     fileSize: 1024 * 1024 * 6, // limit size 6M
     files: 5, // Max number of file fields
   },
+});
+
+app.getInstance().addHook('onRequest', async (request) => {
+  if (!request.headers['x-request-id']) {
+    request.headers['x-request-id'] = ulid();
+  }
 });
 
 app.getInstance().addHook('onError', async (request, reply) => {
