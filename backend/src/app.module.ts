@@ -29,6 +29,7 @@ import { Redis } from 'ioredis';
 
 import { AllExceptionsFilter } from '@src/infra/filters/all-exceptions.filter';
 import { TransformInterceptor } from '@src/infra/interceptors/transform.interceptor';
+import { LogInterceptor } from '@src/infra/interceptors/log.interceptor';
 import { JwtAuthGuard } from '@src/infra/guards/jwt.auth-guard';
 
 import { ApiModule } from '@src/api/api.module';
@@ -132,6 +133,7 @@ const strategies = [JwtStrategy];
 
     { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
     { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: LogInterceptor },
 
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: ThrottlerGuard },

@@ -68,6 +68,8 @@ CREATE TABLE "sys_endpoint" (
     "resource" TEXT NOT NULL,
     "controller" TEXT NOT NULL,
     "summary" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3),
 
     CONSTRAINT "sys_endpoint_pkey" PRIMARY KEY ("id")
 );
@@ -105,6 +107,29 @@ CREATE TABLE "sys_login_log" (
     "created_by" TEXT NOT NULL,
 
     CONSTRAINT "sys_login_log_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "sys_operation_log" (
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "org_code" TEXT NOT NULL,
+    "module_name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "request_id" TEXT NOT NULL,
+    "method" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
+    "ip" TEXT NOT NULL,
+    "user_agent" TEXT,
+    "params" JSONB,
+    "body" JSONB,
+    "response" JSONB,
+    "start_time" TIMESTAMP(3) NOT NULL,
+    "end_time" TIMESTAMP(3) NOT NULL,
+    "duration" INTEGER NOT NULL,
+
+    CONSTRAINT "sys_operation_log_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

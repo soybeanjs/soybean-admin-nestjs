@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/shared/prisma/prisma.service';
-import { RoleReadRepoPort } from '@src/lib/bounded-contexts/iam/role/ports/role-read.repo-port';
+import { RoleReadRepoPort } from '@src/lib/bounded-contexts/iam/role/ports/role.read.repo-port';
 
 @Injectable()
 export class RoleReadPostgresRepository implements RoleReadRepoPort {

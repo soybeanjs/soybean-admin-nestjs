@@ -12,6 +12,7 @@ import { LOG_KEY } from '@src/infra/decorators/log.decorator';
 import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { LOG_OPERATION } from '@src/constants/event-emitter-token.constant';
+import { OperationLogProperties } from '@src/lib/bounded-contexts/log-audit/operation-log/domain/operation-log.read-model';
 
 @Injectable()
 export class LogInterceptor implements NestInterceptor {
@@ -36,15 +37,16 @@ export class LogInterceptor implements NestInterceptor {
 
     const { moduleName, description, logParams, logBody, logResponse } =
       logMetadata;
-    const startTime = Date.now();
+    const startTime = new Date();
     const requestId = Array.isArray(request.headers[X_REQUEST_ID])
       ? request.headers[X_REQUEST_ID][0]
       : request.headers[X_REQUEST_ID] || '';
 
     return next.handle().pipe(
       tap((data) => {
-        const endTime = Date.now();
-        const logEntry = {
+        const endTime = new Date();
+        const duration = endTime.getTime() - startTime.getTime();
+        const operationLog: OperationLogProperties = {
           userId: uid,
           username: username,
           orgCode: domain,
@@ -60,11 +62,11 @@ export class LogInterceptor implements NestInterceptor {
           response: logResponse ? JSON.stringify(data) : null,
           startTime,
           endTime,
-          duration: endTime - startTime,
+          duration,
         };
 
         setImmediate(() => {
-          this.eventEmitter.emit(LOG_OPERATION, logEntry);
+          this.eventEmitter.emit(LOG_OPERATION, operationLog);
         });
       }),
     );

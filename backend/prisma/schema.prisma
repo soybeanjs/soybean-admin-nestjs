@@ -75,13 +75,15 @@ model sys_user_role {
 
 // 接口资源表
 model sys_endpoint {
-  id         String  @id
+  id         String    @id
   path       String
   method     String
   action     String
   resource   String
   controller String
   summary    String?
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
 }
 
 model sys_organization {
@@ -113,4 +115,24 @@ model sys_login_log {
   type       String
   created_at DateTime @default(now())
   created_by String
+}
+
+model sys_operation_log {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  username    String
+  orgCode     String   @map("org_code")
+  moduleName  String   @map("module_name")
+  description String
+  requestId   String   @map("request_id")
+  method      String
+  url         String
+  ip          String
+  userAgent   String?  @map("user_agent")
+  params      Json?    @map("params")
+  body        Json?    @map("body")
+  response    Json?    @map("response")
+  startTime   DateTime @map("start_time")
+  endTime     DateTime @map("end_time")
+  duration    Int
 }

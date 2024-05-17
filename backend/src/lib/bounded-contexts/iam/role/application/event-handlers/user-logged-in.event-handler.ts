@@ -4,7 +4,7 @@ import { RedisUtility } from '@src/shared/redis/services/redis.util';
 import { CacheConstant } from '@src/constants/cache.constant';
 import { Inject } from '@nestjs/common';
 import { RoleReadRepoPortToken } from '@src/lib/bounded-contexts/iam/role/constants';
-import { RoleReadRepoPort } from '@src/lib/bounded-contexts/iam/role/ports/role-read.repo-port';
+import { RoleReadRepoPort } from '@src/lib/bounded-contexts/iam/role/ports/role.read.repo-port';
 import { ISecurityConfig, SecurityConfig } from '@src/config';
 
 @EventsHandler(UserLoggedInEvent)

@@ -12,6 +12,7 @@ import { randomStringGenerator } from '@nestjs/common/utils/random-string-genera
 import { ApiOperation } from '@nestjs/swagger';
 import { AuthActionVerb, AuthZGuard, UsePermissions } from '@src/infra/casbin';
 import { RedisUtility } from '@src/shared/redis/services/redis.util';
+import { Log } from '@src/infra/decorators/log.decorator';
 
 @Controller()
 export class AppController {
@@ -57,5 +58,15 @@ export class AppController {
   async redis(@Query('val') val: string) {
     await RedisUtility.instance.set(`key_${val}`, val);
     return RedisUtility.instance.get(`key_${val}`);
+  }
+
+  @Log('app.controller', 'operation log', {
+    logParams: true,
+    logBody: true,
+    logResponse: true,
+  })
+  @Get('log')
+  async log() {
+    return new Date();
   }
 }

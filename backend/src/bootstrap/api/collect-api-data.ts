@@ -14,9 +14,9 @@ import {
   SWAGGER_API_OPERATION,
 } from '@src/constants/rest.constant';
 import * as crypto from 'crypto';
-import { sys_endpoint } from '@prisma/client';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { API_ENDPOINT } from '@src/constants/event-emitter-token.constant';
+import { ApiEndpoint } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/api-endpoint.model';
 
 @Injectable()
 export class ApiDataService implements OnModuleInit {
@@ -29,7 +29,7 @@ export class ApiDataService implements OnModuleInit {
   private readonly logger = new Logger(ApiDataService.name);
 
   onModuleInit() {
-    const endpoints: sys_endpoint[] = [];
+    const endpoints: ApiEndpoint[] = [];
     this.modulesContainer.forEach((module: Module) => {
       const controllers = Array.from(module.controllers.values());
       controllers.forEach((controller) => {
@@ -77,15 +77,17 @@ export class ApiDataService implements OnModuleInit {
                 )
                 .digest('hex');
 
-              endpoints.push({
-                id,
-                path: cleanedPath,
-                method: RequestMethod[methodType],
-                action,
-                resource,
-                controller: controllerName,
-                summary,
-              });
+              endpoints.push(
+                new ApiEndpoint(
+                  id,
+                  cleanedPath,
+                  RequestMethod[methodType],
+                  action,
+                  resource,
+                  controllerName,
+                  summary,
+                ),
+              );
             });
           });
       });

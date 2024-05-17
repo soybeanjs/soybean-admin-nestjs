@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@src/shared/prisma/prisma.service';
-import { EndpointWriteRepoPort } from '@src/lib/bounded-contexts/api-endpoint/endpoint/ports/endpoint-write.repo-port';
-import { SysEndpoint } from '@src/lib/bounded-contexts/api-endpoint/endpoint/domain/endpoint.model';
+import { ApiEndpointWriteRepoPort } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/ports/api-endpoint.write.repo-port';
+import { ApiEndpoint } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/api-endpoint.model';
 
 @Injectable()
-export class EndpointWriteRepository implements EndpointWriteRepoPort {
+export class ApiEndpointWriteRepository implements ApiEndpointWriteRepoPort {
   constructor(private prisma: PrismaService) {}
 
-  async save(endpoints: SysEndpoint[]): Promise<void> {
+  async save(endpoints: ApiEndpoint[]): Promise<void> {
     const existingEndpoints = await this.prisma.sys_endpoint.findMany();
     const existingIds = existingEndpoints.map((ep) => ep.id);
     const newIds = endpoints.map((ep) => ep.id);
