@@ -60,17 +60,16 @@ CREATE TABLE "sys_user_role" (
 );
 
 -- CreateTable
-CREATE TABLE "sys_resource" (
+CREATE TABLE "sys_endpoint" (
     "id" TEXT NOT NULL,
+    "path" TEXT NOT NULL,
+    "method" TEXT NOT NULL,
     "action" TEXT NOT NULL,
     "resource" TEXT NOT NULL,
-    "possession" TEXT NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "created_by" TEXT NOT NULL,
-    "updated_at" TIMESTAMP(3),
-    "updated_by" TEXT,
+    "controller" TEXT NOT NULL,
+    "summary" TEXT,
 
-    CONSTRAINT "sys_resource_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "sys_endpoint_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable

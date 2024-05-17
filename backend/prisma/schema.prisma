@@ -73,16 +73,15 @@ model sys_user_role {
   @@id([userId, roleId])
 }
 
-// 资源表
-model sys_resource {
-  id         String    @id
+// 接口资源表
+model sys_endpoint {
+  id         String  @id
+  path       String
+  method     String
   action     String
   resource   String
-  possession String
-  created_at DateTime  @default(now())
-  created_by String
-  updated_at DateTime? @updatedAt
-  updated_by String?
+  controller String
+  summary    String?
 }
 
 model sys_organization {
