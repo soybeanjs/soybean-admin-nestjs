@@ -49,7 +49,7 @@ export class LogInterceptor implements NestInterceptor {
         const operationLog: OperationLogProperties = {
           userId: uid,
           username: username,
-          orgCode: domain,
+          domain: domain,
           moduleName,
           description,
           requestId,

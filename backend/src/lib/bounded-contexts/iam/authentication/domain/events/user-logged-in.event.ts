@@ -4,7 +4,7 @@ export class UserLoggedInEvent implements IEvent {
   constructor(
     public readonly userId: string,
     public readonly username: string,
-    public readonly orgCode: string,
+    public readonly domain: string,
     public readonly ip: string,
     public readonly address: string,
     public readonly userAgent: string,

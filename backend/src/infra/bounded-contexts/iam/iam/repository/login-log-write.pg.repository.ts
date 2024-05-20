@@ -12,7 +12,7 @@ export class LoginLogWriteRepository implements LoginLogWriteRepoPort {
       data: {
         user_id: loginLog.userId,
         username: loginLog.username,
-        org_code: loginLog.orgCode,
+        domain: loginLog.domain,
         login_time: new Date(),
         ip: loginLog.ip,
         port: loginLog.port,

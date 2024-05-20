@@ -4,7 +4,7 @@ import { OperationLogProperties } from '@src/lib/bounded-contexts/log-audit/oper
 export class OperationLog extends AggregateRoot {
   readonly userId: string;
   readonly username: string;
-  readonly orgCode: string;
+  readonly domain: string;
   readonly moduleName: string;
   readonly description: string;
   readonly requestId: string;

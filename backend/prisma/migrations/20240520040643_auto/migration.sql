@@ -6,7 +6,7 @@ CREATE TABLE "sys_user" (
     "id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "org_code" TEXT NOT NULL,
+    "domain" TEXT NOT NULL,
     "built_in" BOOLEAN NOT NULL DEFAULT false,
     "avatar" TEXT,
     "email" TEXT,
@@ -33,6 +33,21 @@ CREATE TABLE "casbin_rule" (
     "v5" TEXT,
 
     CONSTRAINT "casbin_rule_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "sys_domain" (
+    "id" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "status" "Status" NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_by" TEXT NOT NULL,
+    "updated_at" TIMESTAMP(3),
+    "updated_by" TEXT,
+
+    CONSTRAINT "sys_domain_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -95,7 +110,7 @@ CREATE TABLE "sys_login_log" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
-    "org_code" TEXT NOT NULL,
+    "domain" TEXT NOT NULL,
     "login_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "ip" TEXT NOT NULL,
     "port" INTEGER,
@@ -114,7 +129,7 @@ CREATE TABLE "sys_operation_log" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
-    "org_code" TEXT NOT NULL,
+    "domain" TEXT NOT NULL,
     "module_name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "request_id" TEXT NOT NULL,
@@ -140,6 +155,9 @@ CREATE UNIQUE INDEX "sys_user_email_key" ON "sys_user"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "sys_user_phone_number_key" ON "sys_user"("phone_number");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sys_domain_code_key" ON "sys_domain"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "sys_role_code_key" ON "sys_role"("code");

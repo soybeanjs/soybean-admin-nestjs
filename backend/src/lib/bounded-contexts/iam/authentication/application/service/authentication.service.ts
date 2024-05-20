@@ -41,14 +41,14 @@ export class AuthenticationService {
     const tokens = await this.generateAccessToken(
       user.id,
       user.username,
-      user.org_code,
+      user.domain,
     );
 
     userAggregate.apply(
       new UserLoggedInEvent(
         user.id,
         user.username,
-        user.org_code,
+        user.domain,
         dto.ip,
         dto.address,
         dto.userAgent,
@@ -66,12 +66,12 @@ export class AuthenticationService {
   private async generateAccessToken(
     userId: string,
     username: string,
-    org_code: string,
+    domain: string,
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const payload: IAuthentication = {
       uid: userId,
       username: username,
-      domain: org_code,
+      domain: domain,
     };
     const accessToken = await this.jwtService.signAsync(payload);
     const refreshToken = await this.jwtService.signAsync(payload, {

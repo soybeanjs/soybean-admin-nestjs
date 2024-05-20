@@ -19,7 +19,7 @@ model sys_user {
   id           String    @id
   username     String    @unique
   password     String
-  org_code     String
+  domain       String
   built_in     Boolean   @default(false)
   avatar       String?
   email        String?   @unique
@@ -50,6 +50,21 @@ model CasbinRule {
   v5    String?
 
   @@map("casbin_rule")
+}
+
+// domain 租户/域
+model sys_domain {
+  id          String    @id
+  code        String    @unique
+  name        String
+  description String?
+  status      Status
+  created_at  DateTime  @default(now())
+  created_by  String
+  updated_at  DateTime? @updatedAt
+  updated_by  String?
+
+  @@map("sys_domain")
 }
 
 // 角色表
@@ -86,6 +101,7 @@ model sys_endpoint {
   updated_at DateTime? @updatedAt
 }
 
+// 组织机构
 model sys_organization {
   id          String    @id
   code        String    @unique
@@ -105,7 +121,7 @@ model sys_login_log {
   id         String   @id @default(cuid())
   user_id    String
   username   String
-  org_code   String
+  domain     String
   login_time DateTime @default(now())
   ip         String
   port       Int?
@@ -121,7 +137,7 @@ model sys_operation_log {
   id          String   @id @default(cuid())
   userId      String   @map("user_id")
   username    String
-  orgCode     String   @map("org_code")
+  domain      String
   moduleName  String   @map("module_name")
   description String
   requestId   String   @map("request_id")

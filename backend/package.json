@@ -17,7 +17,7 @@
     "prisma:update": "prisma migrate dev --name auto && prisma generate",
     "prisma:studio": "prisma studio",
     "start": "nest start",
-    "start:dev": "cross-env NODE_ENV=development TZ=Asia/Shanghai  nest start --watch --path tsconfig.json",
+    "start:dev": "cross-env NODE_ENV=development nest start --watch --path tsconfig.json",
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "start:prod": "cross-env NODE_ENV=production node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

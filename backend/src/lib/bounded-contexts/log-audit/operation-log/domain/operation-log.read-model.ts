@@ -1,7 +1,7 @@
 export interface OperationLogProperties {
   userId: string;
   username: string;
-  orgCode: string;
+  domain: string;
   moduleName: string;
   description: string;
   requestId: string;
