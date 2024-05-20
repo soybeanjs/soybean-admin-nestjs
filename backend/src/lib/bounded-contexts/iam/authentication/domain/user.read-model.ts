@@ -4,11 +4,9 @@ export type UserEssentialProperties = Readonly<
   Required<{
     id: string;
     username: string;
-    status: Status;
     domain: string;
-    email: string | null;
-    phoneNumber: string | null;
     nikeName: string;
+    status: Status;
   }> &
     CreationAuditInfo &
     UpdateAuditInfo
@@ -17,6 +15,9 @@ export type UserEssentialProperties = Readonly<
 export type UserOptionalProperties = Readonly<
   Partial<{
     password: string;
+    avatar: string | null;
+    email: string | null;
+    phoneNumber: string | null;
   }>
 >;
 

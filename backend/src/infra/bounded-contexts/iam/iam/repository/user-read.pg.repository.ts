@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserReadRepoPort } from '@src/lib/bounded-contexts/iam/authentication/ports/user-read.repo-port';
-import {
-  UserEssentialProperties,
-  UserProperties,
-} from '@src/lib/bounded-contexts/iam/authentication/domain/user.read-model';
+import { UserProperties } from '@src/lib/bounded-contexts/iam/authentication/domain/user.read-model';
 import { PrismaService } from '@src/shared/prisma/prisma.service';
 import { PageUsersQuery } from '@src/lib/bounded-contexts/iam/authentication/queries/page-users.query';
 import { PaginationResult } from '@src/shared/prisma/pagination';
@@ -16,15 +13,17 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
   private readonly USER_ESSENTIAL_FIELDS = {
     id: true,
     username: true,
-    status: true,
     domain: true,
+    avatar: true,
     email: true,
     phoneNumber: true,
     nikeName: true,
+    status: true,
     createdAt: true,
     createdBy: true,
     updatedAt: true,
     updatedBy: true,
+    password: false,
   };
 
   async findUserByIdentifier(
@@ -43,7 +42,7 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
 
   async pageUsers(
     query: PageUsersQuery,
-  ): Promise<PaginationResult<UserEssentialProperties>> {
+  ): Promise<PaginationResult<UserProperties>> {
     const where: Prisma.sys_userWhereInput = {};
 
     if (query.username) {
@@ -71,7 +70,7 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
 
     const total = await this.prisma.sys_user.count({ where: where });
 
-    return new PaginationResult<UserEssentialProperties>(
+    return new PaginationResult<UserProperties>(
       query.current,
       query.size,
       total,

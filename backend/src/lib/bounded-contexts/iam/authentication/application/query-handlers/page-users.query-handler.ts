@@ -3,19 +3,18 @@ import { PageUsersQuery } from '../../queries/page-users.query';
 import { UserReadRepoPortToken } from '../../constants';
 import { UserReadRepoPort } from '../../ports/user-read.repo-port';
 import { Inject } from '@nestjs/common';
-import { UserEssentialProperties } from '../../domain/user.read-model';
+import { UserProperties } from '../../domain/user.read-model';
 import { PaginationResult } from '@src/shared/prisma/pagination';
 
 @QueryHandler(PageUsersQuery)
 export class PageUsersQueryHandler
-  implements
-    IQueryHandler<PageUsersQuery, PaginationResult<UserEssentialProperties>>
+  implements IQueryHandler<PageUsersQuery, PaginationResult<UserProperties>>
 {
   @Inject(UserReadRepoPortToken) private readonly repository: UserReadRepoPort;
 
   async execute(
     query: PageUsersQuery,
-  ): Promise<PaginationResult<UserEssentialProperties>> {
+  ): Promise<PaginationResult<UserProperties>> {
     return this.repository.pageUsers(query);
   }
 }

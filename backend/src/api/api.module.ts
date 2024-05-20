@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { Controllers } from './iam/rest/index';
+import { Controllers } from './iam/rest';
 import { IamModule } from '@src/infra/bounded-contexts/iam/iam/iam.module';
 import { RoleInfraModule } from '@src/infra/bounded-contexts/iam/role/role.infra.module';
 import { ApiEndpointInfraModule } from '@src/infra/bounded-contexts/api-endpoint/endpoint/api-endpoint.infra.module';
