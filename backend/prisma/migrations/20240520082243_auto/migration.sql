@@ -115,7 +115,7 @@ CREATE TABLE "sys_login_log" (
     "ip" TEXT NOT NULL,
     "port" INTEGER,
     "address" TEXT NOT NULL,
-    "user_agent" TEXT NOT NULL,
+    "mouser_agentdule_name" TEXT NOT NULL,
     "request_id" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

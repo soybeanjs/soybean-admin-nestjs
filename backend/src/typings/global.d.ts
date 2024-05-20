@@ -17,6 +17,16 @@ declare global {
     };
     data?: T;
   }
+
+  type CreationAuditInfo = Readonly<{
+    createdAt: Date;
+    createdBy: string;
+  }>;
+
+  type UpdateAuditInfo = Readonly<{
+    updatedAt: Date | null;
+    updatedBy: string | null;
+  }>;
 }
 
 export {};

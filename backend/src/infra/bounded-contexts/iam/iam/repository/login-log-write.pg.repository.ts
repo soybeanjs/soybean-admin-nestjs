@@ -10,18 +10,18 @@ export class LoginLogWriteRepository implements LoginLogWriteRepoPort {
   async save(loginLog: LoginLogEntity): Promise<void> {
     await this.prisma.sys_login_log.create({
       data: {
-        user_id: loginLog.userId,
+        userId: loginLog.userId,
         username: loginLog.username,
         domain: loginLog.domain,
-        login_time: new Date(),
+        loginTime: new Date(),
         ip: loginLog.ip,
         port: loginLog.port,
         address: loginLog.address,
-        user_agent: loginLog.userAgent,
-        request_id: loginLog.requestId,
+        userAgent: loginLog.userAgent,
+        requestId: loginLog.requestId,
         type: loginLog.type,
-        created_at: new Date(),
-        created_by: loginLog.userId,
+        createdAt: new Date(),
+        createdBy: loginLog.userId,
       },
     });
   }

@@ -1,11 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { UserReadRepoPort } from '@src/lib/bounded-contexts/iam/authentication/ports/user-read.repo-port';
-import { UserProperties } from '@src/lib/bounded-contexts/iam/authentication/domain/user.read-model';
+import {
+  UserEssentialProperties,
+  UserProperties,
+} from '@src/lib/bounded-contexts/iam/authentication/domain/user.read-model';
 import { PrismaService } from '@src/shared/prisma/prisma.service';
+import { PageUsersQuery } from '@src/lib/bounded-contexts/iam/authentication/queries/page-users.query';
+import { PaginationResult } from '@src/shared/prisma/pagination';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserReadPostgresRepository implements UserReadRepoPort {
   constructor(private prisma: PrismaService) {}
+
+  private readonly USER_ESSENTIAL_FIELDS = {
+    id: true,
+    username: true,
+    status: true,
+    domain: true,
+    email: true,
+    phoneNumber: true,
+    nikeName: true,
+    createdAt: true,
+    createdBy: true,
+    updatedAt: true,
+    updatedBy: true,
+  };
 
   async findUserByIdentifier(
     identifier: string,
@@ -15,9 +35,47 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
         OR: [
           { username: identifier },
           { email: identifier },
-          { phone_number: identifier },
+          { phoneNumber: identifier },
         ],
       },
     });
+  }
+
+  async pageUsers(
+    query: PageUsersQuery,
+  ): Promise<PaginationResult<UserEssentialProperties>> {
+    const where: Prisma.sys_userWhereInput = {};
+
+    if (query.username) {
+      where.username = {
+        contains: query.username,
+      };
+    }
+
+    if (query.nikeName) {
+      where.nikeName = {
+        contains: query.nikeName,
+      };
+    }
+
+    if (query.status) {
+      where.status = query.status;
+    }
+
+    const users = await this.prisma.sys_user.findMany({
+      where: where,
+      skip: (query.current - 1) * query.size,
+      take: query.size,
+      select: this.USER_ESSENTIAL_FIELDS,
+    });
+
+    const total = await this.prisma.sys_user.count({ where: where });
+
+    return new PaginationResult<UserEssentialProperties>(
+      query.current,
+      query.size,
+      total,
+      users,
+    );
   }
 }

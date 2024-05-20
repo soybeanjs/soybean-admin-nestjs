@@ -6,7 +6,12 @@ export type UserEssentialProperties = Readonly<
     username: string;
     status: Status;
     domain: string;
-  }>
+    email: string | null;
+    phoneNumber: string | null;
+    nikeName: string;
+  }> &
+    CreationAuditInfo &
+    UpdateAuditInfo
 >;
 
 export type UserOptionalProperties = Readonly<

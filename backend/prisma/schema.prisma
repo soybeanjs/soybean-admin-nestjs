@@ -16,20 +16,20 @@ datasource db {
 
 // 用户表
 model sys_user {
-  id           String    @id
-  username     String    @unique
-  password     String
-  domain       String
-  built_in     Boolean   @default(false)
-  avatar       String?
-  email        String?   @unique
-  phone_number String?   @unique
-  nike_name    String
-  status       Status
-  created_at   DateTime  @default(now())
-  created_by   String
-  updated_at   DateTime? @updatedAt
-  updated_by   String?
+  id          String    @id
+  username    String    @unique
+  password    String
+  domain      String
+  built_in    Boolean   @default(false)
+  avatar      String?
+  email       String?   @unique
+  phoneNumber String?   @unique @map("phone_number")
+  nikeName    String    @map("nike_name")
+  status      Status
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   String    @map("created_by")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  updatedBy   String?   @map("updated_by")
 }
 
 enum Status {
@@ -59,10 +59,10 @@ model sys_domain {
   name        String
   description String?
   status      Status
-  created_at  DateTime  @default(now())
-  created_by  String
-  updated_at  DateTime? @updatedAt
-  updated_by  String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   String    @map("created_by")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  updatedBy   String?   @map("updated_by")
 
   @@map("sys_domain")
 }
@@ -75,10 +75,10 @@ model sys_role {
   description String?
   pid         String    @default("0")
   status      Status
-  created_at  DateTime  @default(now())
-  created_by  String
-  updated_at  DateTime? @updatedAt
-  updated_by  String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   String    @map("created_by")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  updatedBy   String?   @map("updated_by")
 }
 
 model sys_user_role {
@@ -97,8 +97,8 @@ model sys_endpoint {
   resource   String
   controller String
   summary    String?
-  created_at DateTime  @default(now())
-  updated_at DateTime? @updatedAt
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
 }
 
 // 组织机构
@@ -109,28 +109,28 @@ model sys_organization {
   description String?
   pid         String    @default("0")
   status      Status
-  created_at  DateTime  @default(now())
-  created_by  String
-  updated_at  DateTime? @updatedAt
-  updated_by  String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   String    @map("created_by")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  updatedBy   String?   @map("updated_by")
 
   @@map("sys_organization")
 }
 
 model sys_login_log {
-  id         String   @id @default(cuid())
-  user_id    String
-  username   String
-  domain     String
-  login_time DateTime @default(now())
-  ip         String
-  port       Int?
-  address    String
-  user_agent String
-  request_id String
-  type       String
-  created_at DateTime @default(now())
-  created_by String
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  username  String
+  domain    String
+  loginTime DateTime @default(now()) @map("login_time")
+  ip        String
+  port      Int?
+  address   String
+  userAgent String   @map("mouser_agentdule_name")
+  requestId String   @map("request_id")
+  type      String
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy String   @map("created_by")
 }
 
 model sys_operation_log {
