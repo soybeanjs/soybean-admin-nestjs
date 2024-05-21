@@ -8,8 +8,7 @@ export type RoleEssentialProperties = Readonly<
     pid: string;
     status: Status;
   }> &
-    CreationAuditInfo &
-    UpdateAuditInfo
+    CreationAuditInfo
 >;
 
 export type RoleOptionalProperties = Readonly<

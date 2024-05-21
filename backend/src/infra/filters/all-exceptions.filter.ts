@@ -39,6 +39,15 @@ export class AllExceptionsFilter implements ExceptionFilter {
         code: exception.code,
         message: exception.message,
       };
+    } else if (typeof exception === 'object' && exception !== null) {
+      const message = (exception as any).message
+        ? (exception as any).message
+        : 'Unknown error';
+
+      errorDetails = {
+        code: ErrorCode.INTERNAL_SERVER_ERROR,
+        message: message,
+      };
     }
 
     const responsePayload: ApiResponse = {

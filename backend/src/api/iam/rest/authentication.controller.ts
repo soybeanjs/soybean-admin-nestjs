@@ -33,7 +33,7 @@ export class AuthController {
         request.headers[USER_AGENT] ?? '',
         Array.isArray(request.headers[X_REQUEST_ID])
           ? request.headers[X_REQUEST_ID][0]
-          : request.headers[X_REQUEST_ID] || '',
+          : request.headers[X_REQUEST_ID] ?? '',
         'PC',
         port,
       ),
