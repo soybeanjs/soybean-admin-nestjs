@@ -1,3 +1,3 @@
-import { EndpointController } from './enpoint.controller';
+import { EndpointController } from './endpoint.controller';
 
 export const Controllers = [EndpointController];

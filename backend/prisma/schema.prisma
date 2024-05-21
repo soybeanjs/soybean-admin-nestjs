@@ -126,7 +126,7 @@ model sys_login_log {
   ip        String
   port      Int?
   address   String
-  userAgent String   @map("mouser_agentdule_name")
+  userAgent String   @map("user_agent")
   requestId String   @map("request_id")
   type      String
   createdAt DateTime @default(now()) @map("created_at")
@@ -151,4 +151,5 @@ model sys_operation_log {
   startTime   DateTime @map("start_time")
   endTime     DateTime @map("end_time")
   duration    Int
+  createdAt   DateTime @default(now()) @map("created_at")
 }

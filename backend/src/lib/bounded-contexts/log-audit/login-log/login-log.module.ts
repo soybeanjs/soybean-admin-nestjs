@@ -1,5 +1,6 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { EventHandlers } from './application/event-handlers';
+import { QueryHandlers } from './application/query-handlers';
 
 @Module({})
 export class LoginLogModule {
@@ -10,8 +11,8 @@ export class LoginLogModule {
     return {
       module: LoginLogModule,
       imports: [...options.imports],
-      providers: [...EventHandlers, ...options.inject],
-      exports: [],
+      providers: [...EventHandlers, ...QueryHandlers, ...options.inject],
+      exports: [...QueryHandlers],
     };
   }
 }
