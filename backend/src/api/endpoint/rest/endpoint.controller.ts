@@ -7,7 +7,7 @@ import { EndpointProperties } from '@src/lib/bounded-contexts/api-endpoint/api-e
 import { PageEndpointsQuery } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/queries/page-endpoints.query';
 
 @ApiTags('接口资源管理模块')
-@Controller('endpoint')
+@Controller('api-endpoint')
 export class EndpointController {
   constructor(private queryBus: QueryBus) {}
 
