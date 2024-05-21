@@ -8,7 +8,7 @@ export class OperationLogWriteRepository implements OperationLogWriteRepoPort {
   constructor(private prisma: PrismaService) {}
 
   async save(operationLog: OperationLog): Promise<void> {
-    await this.prisma.sys_operation_log.create({
+    await this.prisma.sysOperationLog.create({
       data: operationLog,
     });
   }

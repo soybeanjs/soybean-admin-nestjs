@@ -29,7 +29,7 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
   async findUserByIdentifier(
     identifier: string,
   ): Promise<UserProperties | null> {
-    return this.prisma.sys_user.findFirst({
+    return this.prisma.sysUser.findFirst({
       where: {
         OR: [
           { username: identifier },
@@ -43,7 +43,7 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
   async pageUsers(
     query: PageUsersQuery,
   ): Promise<PaginationResult<UserProperties>> {
-    const where: Prisma.sys_userWhereInput = {};
+    const where: Prisma.SysUserWhereInput = {};
 
     if (query.username) {
       where.username = {
@@ -61,14 +61,14 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
       where.status = query.status;
     }
 
-    const users = await this.prisma.sys_user.findMany({
+    const users = await this.prisma.sysUser.findMany({
       where: where,
       skip: (query.current - 1) * query.size,
       take: query.size,
       select: this.USER_ESSENTIAL_FIELDS,
     });
 
-    const total = await this.prisma.sys_user.count({ where: where });
+    const total = await this.prisma.sysUser.count({ where: where });
 
     return new PaginationResult<UserProperties>(
       query.current,

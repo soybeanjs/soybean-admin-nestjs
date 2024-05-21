@@ -8,7 +8,7 @@ export class LoginLogWriteRepository implements LoginLogWriteRepoPort {
   constructor(private prisma: PrismaService) {}
 
   async save(loginLog: LoginLogEntity): Promise<void> {
-    await this.prisma.sys_login_log.create({
+    await this.prisma.sysLoginLog.create({
       data: {
         userId: loginLog.userId,
         username: loginLog.username,

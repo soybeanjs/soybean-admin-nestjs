@@ -8,13 +8,13 @@ export class ApiEndpointWriteRepository implements ApiEndpointWriteRepoPort {
   constructor(private prisma: PrismaService) {}
 
   async save(endpoints: ApiEndpoint[]): Promise<void> {
-    const existingEndpoints = await this.prisma.sys_endpoint.findMany();
+    const existingEndpoints = await this.prisma.sysEndpoint.findMany();
     const existingIds = existingEndpoints.map((ep) => ep.id);
     const newIds = endpoints.map((ep) => ep.id);
     const idsToDelete = existingIds.filter((id) => !newIds.includes(id));
 
     const upsertPromises = endpoints.map((endpoint) => {
-      return this.prisma.sys_endpoint.upsert({
+      return this.prisma.sysEndpoint.upsert({
         where: { id: endpoint.id },
         update: {
           path: endpoint.path,
@@ -28,7 +28,7 @@ export class ApiEndpointWriteRepository implements ApiEndpointWriteRepoPort {
       });
     });
 
-    const deletePromise = this.prisma.sys_endpoint.deleteMany({
+    const deletePromise = this.prisma.sysEndpoint.deleteMany({
       where: {
         id: { in: idsToDelete },
       },

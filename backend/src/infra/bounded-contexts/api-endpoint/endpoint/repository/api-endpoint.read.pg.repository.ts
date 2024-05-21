@@ -13,7 +13,7 @@ export class ApiEndpointReadRepository implements ApiEndpointReadRepoPort {
   async pageEndpoints(
     query: PageEndpointsQuery,
   ): Promise<PaginationResult<EndpointProperties>> {
-    const where: Prisma.sys_endpointWhereInput = {};
+    const where: Prisma.SysEndpointWhereInput = {};
 
     if (query.path) {
       where.path = {
@@ -35,7 +35,7 @@ export class ApiEndpointReadRepository implements ApiEndpointReadRepoPort {
       };
     }
 
-    const endpoints = await this.prisma.sys_endpoint.findMany({
+    const endpoints = await this.prisma.sysEndpoint.findMany({
       where: where,
       skip: (query.current - 1) * query.size,
       take: query.size,
@@ -58,7 +58,7 @@ export class ApiEndpointReadRepository implements ApiEndpointReadRepoPort {
       ],
     });
 
-    const total = await this.prisma.sys_endpoint.count({ where: where });
+    const total = await this.prisma.sysEndpoint.count({ where: where });
 
     return new PaginationResult<EndpointProperties>(
       query.current,

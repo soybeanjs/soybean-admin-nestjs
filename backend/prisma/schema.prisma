@@ -15,7 +15,7 @@ datasource db {
 }
 
 // 用户表
-model sys_user {
+model SysUser {
   id          String    @id
   username    String    @unique
   password    String
@@ -30,6 +30,8 @@ model sys_user {
   createdBy   String    @map("created_by")
   updatedAt   DateTime? @updatedAt @map("updated_at")
   updatedBy   String?   @map("updated_by")
+
+  @@map("sys_user")
 }
 
 enum Status {
@@ -53,7 +55,7 @@ model CasbinRule {
 }
 
 // domain 租户/域
-model sys_domain {
+model SysDomain {
   id          String    @id
   code        String    @unique
   name        String
@@ -68,7 +70,7 @@ model sys_domain {
 }
 
 // 角色表
-model sys_role {
+model SysRole {
   id          String    @id
   code        String    @unique
   name        String
@@ -79,17 +81,20 @@ model sys_role {
   createdBy   String    @map("created_by")
   updatedAt   DateTime? @updatedAt @map("updated_at")
   updatedBy   String?   @map("updated_by")
+
+  @@map("sys_role")
 }
 
-model sys_user_role {
+model SysUserRole {
   userId String
   roleId String
 
   @@id([userId, roleId])
+  @@map("sys_user_role")
 }
 
 // 接口资源表
-model sys_endpoint {
+model SysEndpoint {
   id         String    @id
   path       String
   method     String
@@ -99,10 +104,12 @@ model sys_endpoint {
   summary    String?
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  @@map("sys_endpoint")
 }
 
 // 组织机构
-model sys_organization {
+model SysOrganization {
   id          String    @id
   code        String    @unique
   name        String
@@ -117,7 +124,7 @@ model sys_organization {
   @@map("sys_organization")
 }
 
-model sys_login_log {
+model SysLoginLog {
   id        String   @id @default(cuid())
   userId    String   @map("user_id")
   username  String
@@ -131,9 +138,11 @@ model sys_login_log {
   type      String
   createdAt DateTime @default(now()) @map("created_at")
   createdBy String   @map("created_by")
+
+  @@map("sys_login_log")
 }
 
-model sys_operation_log {
+model SysOperationLog {
   id          String   @id @default(cuid())
   userId      String   @map("user_id")
   username    String
@@ -152,4 +161,6 @@ model sys_operation_log {
   endTime     DateTime @map("end_time")
   duration    Int
   createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("sys_operation_log")
 }

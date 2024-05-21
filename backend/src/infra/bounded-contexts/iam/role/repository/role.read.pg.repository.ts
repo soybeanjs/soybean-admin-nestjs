@@ -11,7 +11,7 @@ export class RoleReadPostgresRepository implements RoleReadRepoPort {
   constructor(private prisma: PrismaService) {}
 
   async findRolesByUserId(userId: string): Promise<Set<string>> {
-    const userRoles = await this.prisma.sys_user_role.findMany({
+    const userRoles = await this.prisma.sysUserRole.findMany({
       where: {
         userId: userId,
       },
@@ -22,7 +22,7 @@ export class RoleReadPostgresRepository implements RoleReadRepoPort {
 
     const roleIds = userRoles.map((userRole) => userRole.roleId);
 
-    const roles = await this.prisma.sys_role.findMany({
+    const roles = await this.prisma.sysRole.findMany({
       where: {
         id: {
           in: roleIds,
@@ -41,7 +41,7 @@ export class RoleReadPostgresRepository implements RoleReadRepoPort {
   async pageRoles(
     query: PageRolesQuery,
   ): Promise<PaginationResult<RoleProperties>> {
-    const where: Prisma.sys_roleWhereInput = {};
+    const where: Prisma.SysRoleWhereInput = {};
 
     if (query.code) {
       where.code = {
@@ -59,13 +59,13 @@ export class RoleReadPostgresRepository implements RoleReadRepoPort {
       where.status = query.status;
     }
 
-    const roles = await this.prisma.sys_role.findMany({
+    const roles = await this.prisma.sysRole.findMany({
       where: where,
       skip: (query.current - 1) * query.size,
       take: query.size,
     });
 
-    const total = await this.prisma.sys_role.count({ where: where });
+    const total = await this.prisma.sysRole.count({ where: where });
 
     return new PaginationResult<RoleProperties>(
       query.current,

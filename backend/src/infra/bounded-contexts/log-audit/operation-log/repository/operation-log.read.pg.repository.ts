@@ -13,7 +13,7 @@ export class OperationLogReadRepository implements OperationLogReadRepoPort {
   async pageOperationLogs(
     query: PageOperationLogsQuery,
   ): Promise<PaginationResult<OperationLogProperties>> {
-    const where: Prisma.sys_operation_logWhereInput = {};
+    const where: Prisma.SysOperationLogWhereInput = {};
 
     if (query.username) {
       where.username = {
@@ -35,7 +35,7 @@ export class OperationLogReadRepository implements OperationLogReadRepoPort {
       where.method = query.method;
     }
 
-    const operationLogs = await this.prisma.sys_operation_log.findMany({
+    const operationLogs = await this.prisma.sysOperationLog.findMany({
       where: where,
       skip: (query.current - 1) * query.size,
       take: query.size,
@@ -46,7 +46,7 @@ export class OperationLogReadRepository implements OperationLogReadRepoPort {
       ],
     });
 
-    const total = await this.prisma.sys_operation_log.count({ where: where });
+    const total = await this.prisma.sysOperationLog.count({ where: where });
 
     return new PaginationResult<OperationLogProperties>(
       query.current,
