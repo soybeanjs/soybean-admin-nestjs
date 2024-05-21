@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { Controllers } from './iam/rest';
+import { Controllers as IamRest } from './iam/rest';
+import { Controllers as EndpointRest } from './endpoint/rest';
 import { IamModule } from '@src/infra/bounded-contexts/iam/iam/iam.module';
 import { RoleInfraModule } from '@src/infra/bounded-contexts/iam/role/role.infra.module';
 import { ApiEndpointInfraModule } from '@src/infra/bounded-contexts/api-endpoint/endpoint/api-endpoint.infra.module';
@@ -12,6 +13,6 @@ import { OperationLogInfraModule } from '@src/infra/bounded-contexts/log-audit/o
     ApiEndpointInfraModule,
     OperationLogInfraModule,
   ],
-  controllers: [...Controllers],
+  controllers: [...IamRest, ...EndpointRest],
 })
 export class ApiModule {}
