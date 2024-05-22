@@ -1,13 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { RoleAssignPermissionCommand } from '../../commands/role-assign-permission.command';
-import { GetRoleByIdQuery } from '@src/lib/bounded-contexts/iam/role/queries/role.by-id.query';
-import { RoleProperties } from '@src/lib/bounded-contexts/iam/role/domain/role.read-model';
-import { FindEndpointsByIdsQuery } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/queries/endpoints.by-ids.query';
-import { EndpointProperties } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/endpoint.read-model';
+
 import { AuthZRBACService } from '@src/infra/casbin';
-import { GetDomainByCodeQuery } from '@src/lib/bounded-contexts/iam/casbin-domain/queries/domain.by-id.query';
+import { EndpointProperties } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/endpoint.read-model';
+import { FindEndpointsByIdsQuery } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/queries/endpoints.by-ids.query';
 import { CasbinDomainProperties } from '@src/lib/bounded-contexts/iam/casbin-domain/domain/casbin-domain.read-model';
+import { GetDomainByCodeQuery } from '@src/lib/bounded-contexts/iam/casbin-domain/queries/domain.by-id.query';
+import { RoleProperties } from '@src/lib/bounded-contexts/iam/role/domain/role.read-model';
+import { GetRoleByIdQuery } from '@src/lib/bounded-contexts/iam/role/queries/role.by-id.query';
+
+import { RoleAssignPermissionCommand } from '../../commands/role-assign-permission.command';
 
 @Injectable()
 export class AuthorizationService {

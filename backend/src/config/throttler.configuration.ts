@@ -1,4 +1,5 @@
 import { ConfigType, registerAs } from '@nestjs/config';
+
 import { getEnvNumber } from '@src/utils/env';
 
 export const throttlerConfigToken = 'throttler';

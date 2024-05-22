@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { CasbinDomainWriteRepository } from './repository/casbin-domain.write.pg.repository';
-import { CasbinDomainReadRepository } from './repository/casbin-domain.read.pg.repository';
+
+import { CasbinDomainModule } from '@src/lib/bounded-contexts/iam/casbin-domain/casbin-domain.module';
 import {
   CasbinDomainReadRepoPortToken,
   CasbinDomainWriteRepoPortToken,
 } from '@src/lib/bounded-contexts/iam/casbin-domain/constants';
-import { CasbinDomainModule } from '@src/lib/bounded-contexts/iam/casbin-domain/casbin-domain.module';
+
+import { CasbinDomainReadRepository } from './repository/casbin-domain.read.pg.repository';
+import { CasbinDomainWriteRepository } from './repository/casbin-domain.write.pg.repository';
 
 const providers = [
   {

@@ -1,4 +1,6 @@
 import cluster from 'node:cluster';
+
+import fastifyCompress from '@fastify/compress';
 import {
   HttpStatus,
   Logger,
@@ -10,11 +12,10 @@ import { NestFactory } from '@nestjs/core';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { useContainer } from 'class-validator';
 
-import { ConfigKeyPaths, IAppConfig } from '@src/config';
-import { isMainProcess } from '@src/utils/env';
-import { fastifyApp } from '@src/infra/adapter/fastify.adapter';
-import fastifyCompress from '@fastify/compress';
 import { initDocSwagger } from '@src/bootstrap/swagger/init-doc.swagger';
+import { ConfigKeyPaths, IAppConfig } from '@src/config';
+import { fastifyApp } from '@src/infra/adapter/fastify.adapter';
+import { isMainProcess } from '@src/utils/env';
 
 import { AppModule } from './app.module';
 

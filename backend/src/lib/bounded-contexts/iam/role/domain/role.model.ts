@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { RoleProperties } from '../domain/role.read-model';
 import { Status } from '@prisma/client';
+
+import { RoleProperties } from '../domain/role.read-model';
 
 export interface IRole {
   commit(): void;

@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { CasbinDomainProperties } from '../domain/casbin-domain.read-model';
 import { Status } from '@prisma/client';
+
+import { CasbinDomainProperties } from '../domain/casbin-domain.read-model';
 
 export interface ICasbinDomain {
   commit(): void;

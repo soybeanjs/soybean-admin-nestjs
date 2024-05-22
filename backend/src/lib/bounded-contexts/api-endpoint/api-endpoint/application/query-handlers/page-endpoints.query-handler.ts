@@ -1,10 +1,12 @@
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { PageEndpointsQuery } from '../../queries/page-endpoints.query';
-import { ApiEndpointReadRepoPortToken } from '../../constants';
-import { ApiEndpointReadRepoPort } from '../../ports/api-endpoint.read.repo-port';
 import { Inject } from '@nestjs/common';
-import { EndpointProperties } from '../../domain/endpoint.read-model';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import { PaginationResult } from '@src/shared/prisma/pagination';
+
+import { ApiEndpointReadRepoPortToken } from '../../constants';
+import { EndpointProperties } from '../../domain/endpoint.read-model';
+import { ApiEndpointReadRepoPort } from '../../ports/api-endpoint.read.repo-port';
+import { PageEndpointsQuery } from '../../queries/page-endpoints.query';
 
 @QueryHandler(PageEndpointsQuery)
 export class PageEndpointsQueryHandler

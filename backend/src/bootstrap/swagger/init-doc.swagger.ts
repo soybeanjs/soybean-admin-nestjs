@@ -1,11 +1,13 @@
 import { INestApplication, Logger } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Response } from '@src/infra/rest/res.response';
 import { ConfigService } from '@nestjs/config';
-import { appConfigToken, ConfigKeyPaths, IAppConfig } from '@src/config';
-import * as packageJson from '../../../package.json';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import chalk from 'chalk';
 import gradient from 'gradient-string';
+
+import { appConfigToken, ConfigKeyPaths, IAppConfig } from '@src/config';
+import { Response } from '@src/infra/rest/res.response';
+
+import * as packageJson from '../../../package.json';
 
 export function initDocSwagger(
   app: INestApplication,

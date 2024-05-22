@@ -5,13 +5,14 @@ import {
   CallHandler,
   Logger,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Reflector } from '@nestjs/core';
-import { LOG_KEY } from '@src/infra/decorators/log.decorator';
-import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
-import { EventEmitter2 } from '@nestjs/event-emitter';
+
 import { LOG_OPERATION } from '@src/constants/event-emitter-token.constant';
+import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
+import { LOG_KEY } from '@src/infra/decorators/log.decorator';
 import { OperationLogProperties } from '@src/lib/bounded-contexts/log-audit/operation-log/domain/operation-log.read-model';
 
 @Injectable()

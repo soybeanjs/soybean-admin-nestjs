@@ -1,8 +1,9 @@
+import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetRolesQuery } from '../../queries/get-roles.query';
+
 import { RoleReadRepoPortToken } from '../../constants';
 import { RoleReadRepoPort } from '../../ports/role.read.repo-port';
-import { Inject } from '@nestjs/common';
+import { GetRolesQuery } from '../../queries/get-roles.query';
 
 @QueryHandler(GetRolesQuery)
 export class GetRolesQueryHandler

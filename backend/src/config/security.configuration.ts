@@ -1,4 +1,5 @@
 import { ConfigType, registerAs } from '@nestjs/config';
+
 import { getEnvNumber, getEnvString } from '@src/utils/env';
 
 export const securityRegToken = 'security';

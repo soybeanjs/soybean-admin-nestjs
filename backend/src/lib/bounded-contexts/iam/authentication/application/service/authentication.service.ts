@@ -4,14 +4,16 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { EventPublisher } from '@nestjs/cqrs';
+import { JwtService } from '@nestjs/jwt';
+
 import { ISecurityConfig, SecurityConfig } from '@src/config';
-import { UserReadRepoPortToken } from '../../constants';
-import { UserReadRepoPort } from '../../ports/user-read.repo-port';
-import { UserModel } from '../../domain/user.model';
+
 import { PasswordIdentifierDTO } from '../../application/dto/password-identifier.dto';
+import { UserReadRepoPortToken } from '../../constants';
 import { UserLoggedInEvent } from '../../domain/events/user-logged-in.event';
+import { UserModel } from '../../domain/user.model';
+import { UserReadRepoPort } from '../../ports/user-read.repo-port';
 
 @Injectable()
 export class AuthenticationService {

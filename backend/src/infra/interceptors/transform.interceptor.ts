@@ -6,9 +6,10 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { Observable, TimeoutError } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
-import { FastifyReply, FastifyRequest } from 'fastify';
+
 import {
   RESPONSE_SUCCESS_CODE,
   RESPONSE_SUCCESS_MSG,

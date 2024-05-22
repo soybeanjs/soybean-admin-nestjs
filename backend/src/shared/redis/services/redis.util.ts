@@ -1,4 +1,5 @@
 import { Redis, Cluster } from 'ioredis';
+
 import { RedisConfig } from '@src/config/redis.configuration';
 
 export class RedisUtility {

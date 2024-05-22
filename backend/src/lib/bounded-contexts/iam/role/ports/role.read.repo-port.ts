@@ -1,6 +1,7 @@
 import { PaginationResult } from '@src/shared/prisma/pagination';
-import { PageRolesQuery } from '../queries/page-roles.query';
+
 import { RoleProperties } from '../domain/role.read-model';
+import { PageRolesQuery } from '../queries/page-roles.query';
 
 export interface RoleReadRepoPort {
   findRolesByUserId(userId: string): Promise<Set<string>>;

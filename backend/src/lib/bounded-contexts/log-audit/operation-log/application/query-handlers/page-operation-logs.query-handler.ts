@@ -1,10 +1,12 @@
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { PageOperationLogsQuery } from '../../queries/page-operation-logs.query';
-import { OperationLogReadRepoPortToken } from '../../constants';
-import { OperationLogReadRepoPort } from '../../ports/operation-log.read.repo-port';
 import { Inject } from '@nestjs/common';
-import { OperationLogProperties } from '../../domain/operation-log.read-model';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
 import { PaginationResult } from '@src/shared/prisma/pagination';
+
+import { OperationLogReadRepoPortToken } from '../../constants';
+import { OperationLogProperties } from '../../domain/operation-log.read-model';
+import { OperationLogReadRepoPort } from '../../ports/operation-log.read.repo-port';
+import { PageOperationLogsQuery } from '../../queries/page-operation-logs.query';
 
 @QueryHandler(PageOperationLogsQuery)
 export class PageOperationLogsQueryHandler

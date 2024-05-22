@@ -1,3 +1,5 @@
+import * as crypto from 'crypto';
+
 import {
   Injectable,
   Logger,
@@ -6,16 +8,16 @@ import {
 } from '@nestjs/common';
 import { ModulesContainer, Reflector } from '@nestjs/core';
 import { Module } from '@nestjs/core/injector/module';
-import { Permission, PERMISSIONS_METADATA } from '@src/infra/casbin';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+
+import { API_ENDPOINT } from '@src/constants/event-emitter-token.constant';
 import {
   FUNCTION,
   METHOD,
   PATH,
   SWAGGER_API_OPERATION,
 } from '@src/constants/rest.constant';
-import * as crypto from 'crypto';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { API_ENDPOINT } from '@src/constants/event-emitter-token.constant';
+import { Permission, PERMISSIONS_METADATA } from '@src/infra/casbin';
 import { ApiEndpoint } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/api-endpoint.model';
 
 @Injectable()

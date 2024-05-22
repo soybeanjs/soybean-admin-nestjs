@@ -3,18 +3,20 @@ import {
   CanActivate,
   ExecutionContext,
   Inject,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import * as casbin from 'casbin';
+
+import { CacheConstant } from '@src/constants/cache.constant';
+import { RedisUtility } from '@src/shared/redis/services/redis.util';
+
 import {
   AUTHZ_ENFORCER,
   PERMISSIONS_METADATA,
   AUTHZ_MODULE_OPTIONS,
 } from '../constants/authz.constants';
-import * as casbin from 'casbin';
 import { Permission, AuthZModuleOptions } from '../interfaces';
-import { UnauthorizedException } from '@nestjs/common';
-import { RedisUtility } from '@src/shared/redis/services/redis.util';
-import { CacheConstant } from '@src/constants/cache.constant';
 
 @Injectable()
 export class AuthZGuard implements CanActivate {

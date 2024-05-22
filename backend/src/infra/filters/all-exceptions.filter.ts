@@ -5,13 +5,14 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { FastifyReply, FastifyRequest } from 'fastify';
+
+import { X_REQUEST_ID } from '@src/constants/rest.constant';
 import {
   BizException,
   ErrorCode,
   ErrorMessages,
 } from '@src/shared/errors/error-code.enum';
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { X_REQUEST_ID } from '@src/constants/rest.constant';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

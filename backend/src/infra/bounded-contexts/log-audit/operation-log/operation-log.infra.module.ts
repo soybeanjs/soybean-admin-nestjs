@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { OperationLogWriteRepository } from './repository/operation-log.write.pg.repository';
-import { OperationLogReadRepository } from './repository/operation-log.read.pg.repository';
-import { OperationLogModule } from '@src/lib/bounded-contexts/log-audit/operation-log/operation-log.module';
+
 import {
   OperationLogReadRepoPortToken,
   OperationLogWriteRepoPortToken,
 } from '@src/lib/bounded-contexts/log-audit/operation-log/constants';
+import { OperationLogModule } from '@src/lib/bounded-contexts/log-audit/operation-log/operation-log.module';
+
+import { OperationLogReadRepository } from './repository/operation-log.read.pg.repository';
+import { OperationLogWriteRepository } from './repository/operation-log.write.pg.repository';
 
 const providers = [
   {

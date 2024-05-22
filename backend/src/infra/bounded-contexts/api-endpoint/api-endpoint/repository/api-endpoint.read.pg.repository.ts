@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@src/shared/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+
+import { EndpointProperties } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/endpoint.read-model';
 import { ApiEndpointReadRepoPort } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/ports/api-endpoint.read.repo-port';
 import { PageEndpointsQuery } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/queries/page-endpoints.query';
 import { PaginationResult } from '@src/shared/prisma/pagination';
-import { EndpointProperties } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/endpoint.read-model';
-import { Prisma } from '@prisma/client';
+import { PrismaService } from '@src/shared/prisma/prisma.service';
 
 @Injectable()
 export class ApiEndpointReadRepository implements ApiEndpointReadRepoPort {

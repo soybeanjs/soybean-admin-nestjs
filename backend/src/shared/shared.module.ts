@@ -1,10 +1,10 @@
-import { Global, Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
-import { ScheduleModule } from '@nestjs/schedule';
+import { Global, Module } from '@nestjs/common';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ScheduleModule } from '@nestjs/schedule';
 
-import { PrismaModule } from './prisma/prisma.module';
 import { CacheManagerModule } from './cache-manager/cache-manager.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Global()
 @Module({

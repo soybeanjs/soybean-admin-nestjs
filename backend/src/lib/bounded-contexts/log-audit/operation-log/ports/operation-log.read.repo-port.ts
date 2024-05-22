@@ -1,6 +1,7 @@
 import { PaginationResult } from '@src/shared/prisma/pagination';
-import { PageOperationLogsQuery } from '../queries/page-operation-logs.query';
+
 import { OperationLogProperties } from '../domain/operation-log.read-model';
+import { PageOperationLogsQuery } from '../queries/page-operation-logs.query';
 
 export interface OperationLogReadRepoPort {
   pageOperationLogs(

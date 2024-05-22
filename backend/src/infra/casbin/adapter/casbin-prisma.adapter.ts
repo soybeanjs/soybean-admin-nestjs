@@ -1,7 +1,7 @@
-import type { Adapter, Model } from 'casbin';
-import { Helper } from 'casbin';
 import type { CasbinRule } from '@prisma/client';
 import { Prisma, PrismaClient } from '@prisma/client';
+import type { Adapter, Model } from 'casbin';
+import { Helper } from 'casbin';
 
 export class PrismaAdapter implements Adapter {
   filtered = false;

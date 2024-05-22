@@ -1,7 +1,8 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Post } from '@nestjs/common';
-import { AuthorizationService } from '@src/lib/bounded-contexts/iam/authentication/application/service/authorization.service';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { AssignPermissionDto } from '@src/api/iam/dto/assign-permission.dto';
+import { AuthorizationService } from '@src/lib/bounded-contexts/iam/authentication/application/service/authorization.service';
 import { RoleAssignPermissionCommand } from '@src/lib/bounded-contexts/iam/authentication/commands/role-assign-permission.command';
 
 @ApiTags('Authorization - Module')

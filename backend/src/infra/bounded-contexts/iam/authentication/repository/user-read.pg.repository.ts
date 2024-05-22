@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { UserReadRepoPort } from '@src/lib/bounded-contexts/iam/authentication/ports/user-read.repo-port';
+import { Prisma } from '@prisma/client';
+
 import { UserProperties } from '@src/lib/bounded-contexts/iam/authentication/domain/user.read-model';
-import { PrismaService } from '@src/shared/prisma/prisma.service';
+import { UserReadRepoPort } from '@src/lib/bounded-contexts/iam/authentication/ports/user-read.repo-port';
 import { PageUsersQuery } from '@src/lib/bounded-contexts/iam/authentication/queries/page-users.query';
 import { PaginationResult } from '@src/shared/prisma/pagination';
-import { Prisma } from '@prisma/client';
+import { PrismaService } from '@src/shared/prisma/prisma.service';
 
 @Injectable()
 export class UserReadPostgresRepository implements UserReadRepoPort {

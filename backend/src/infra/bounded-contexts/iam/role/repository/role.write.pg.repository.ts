@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@src/shared/prisma/prisma.service';
-import { RoleWriteRepoPort } from '@src/lib/bounded-contexts/iam/role/ports/role.write.repo-port';
+
 import { Role } from '@src/lib/bounded-contexts/iam/role/domain/role.model';
+import { RoleWriteRepoPort } from '@src/lib/bounded-contexts/iam/role/ports/role.write.repo-port';
+import { PrismaService } from '@src/shared/prisma/prisma.service';
 
 @Injectable()
 export class RoleWritePostgresRepository implements RoleWriteRepoPort {

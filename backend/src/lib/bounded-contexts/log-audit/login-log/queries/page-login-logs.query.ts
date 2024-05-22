@@ -1,5 +1,7 @@
 import { IQuery } from '@nestjs/cqrs';
+
 import { PaginationParams } from '@src/shared/prisma/pagination';
+
 export class PageLoginLogsQuery extends PaginationParams implements IQuery {
   readonly username?: string;
   readonly domain?: string;

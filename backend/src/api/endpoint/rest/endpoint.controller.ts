@@ -1,14 +1,15 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { PageEndpointsQueryDto } from '@src/api/endpoint/dto/page-endpoint.query-dto';
-import { PaginationResult } from '@src/shared/prisma/pagination';
+import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
 import {
   EndpointProperties,
   EndpointReadModel,
 } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/endpoint.read-model';
 import { PageEndpointsQuery } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/queries/page-endpoints.query';
-import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
+import { PaginationResult } from '@src/shared/prisma/pagination';
 
 @ApiTags('API Endpoint - Module')
 @Controller('api-endpoint')

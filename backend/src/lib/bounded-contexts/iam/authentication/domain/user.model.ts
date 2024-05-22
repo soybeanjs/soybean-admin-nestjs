@@ -1,7 +1,8 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Status } from '@prisma/client';
-import { UserProperties } from './user.read-model';
+
 import { Password } from './password.value-object';
+import { UserProperties } from './user.read-model';
 
 export interface IUser {
   verifyPassword(password: string): Promise<boolean>;

@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@src/shared/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+
+import { RoleProperties } from '@src/lib/bounded-contexts/iam/role/domain/role.read-model';
 import { RoleReadRepoPort } from '@src/lib/bounded-contexts/iam/role/ports/role.read.repo-port';
 import { PageRolesQuery } from '@src/lib/bounded-contexts/iam/role/queries/page-roles.query';
 import { PaginationResult } from '@src/shared/prisma/pagination';
-import { RoleProperties } from '@src/lib/bounded-contexts/iam/role/domain/role.read-model';
-import { Prisma } from '@prisma/client';
+import { PrismaService } from '@src/shared/prisma/prisma.service';
 
 @Injectable()
 export class RoleReadPostgresRepository implements RoleReadRepoPort {

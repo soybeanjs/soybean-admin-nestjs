@@ -1,5 +1,6 @@
-import { FastifyRequest } from 'fastify';
 import { IncomingMessage } from 'node:http';
+
+import { FastifyRequest } from 'fastify';
 
 export function getClientIpAndPort(request: FastifyRequest | IncomingMessage): {
   ip: string;

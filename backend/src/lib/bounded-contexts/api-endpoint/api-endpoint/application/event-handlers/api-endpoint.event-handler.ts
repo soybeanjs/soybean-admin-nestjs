@@ -1,9 +1,11 @@
 import { Inject } from '@nestjs/common';
-import { ApiEndpointWriteRepoPortToken } from '../../constants';
-import { ApiEndpointWriteRepoPort } from '../../ports/api-endpoint.write.repo-port';
-import { ApiEndpoint } from '../../domain/api-endpoint.model';
 import { OnEvent } from '@nestjs/event-emitter';
+
 import { API_ENDPOINT } from '@src/constants/event-emitter-token.constant';
+
+import { ApiEndpointWriteRepoPortToken } from '../../constants';
+import { ApiEndpoint } from '../../domain/api-endpoint.model';
+import { ApiEndpointWriteRepoPort } from '../../ports/api-endpoint.write.repo-port';
 
 export class ApiEndpointEventHandler {
   constructor(

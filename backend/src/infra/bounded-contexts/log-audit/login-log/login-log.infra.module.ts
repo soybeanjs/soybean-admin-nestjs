@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { LoginLogWriteRepository } from './repository/login-log.write.pg.repository';
-import { LoginLogReadRepository } from './repository/login-log.read.pg.repository';
-import { LoginLogModule } from '@src/lib/bounded-contexts/log-audit/login-log/login-log.module';
+
 import {
   LoginLogReadRepoPortToken,
   LoginLogWriteRepoPortToken,
 } from '@src/lib/bounded-contexts/log-audit/login-log/constants';
+import { LoginLogModule } from '@src/lib/bounded-contexts/log-audit/login-log/login-log.module';
+
+import { LoginLogReadRepository } from './repository/login-log.read.pg.repository';
+import { LoginLogWriteRepository } from './repository/login-log.write.pg.repository';
 
 const providers = [
   {

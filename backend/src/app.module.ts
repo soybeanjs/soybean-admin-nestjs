@@ -6,14 +6,24 @@ import {
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-
 import * as casbin from 'casbin';
-import { AuthZModule, AUTHZ_ENFORCER, PrismaAdapter } from '@src/infra/casbin';
+import { Redis } from 'ioredis';
+import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis';
+
+import { ApiModule } from '@src/api/api.module';
 import { BootstrapModule } from '@src/bootstrap/bootstrap.module';
 import { GlobalCqrsModule } from '@src/global/module/global.module';
-
+import { AuthZModule, AUTHZ_ENFORCER, PrismaAdapter } from '@src/infra/casbin';
+import { AllExceptionsFilter } from '@src/infra/filters/all-exceptions.filter';
+import { JwtAuthGuard } from '@src/infra/guards/jwt.auth-guard';
+import { LogInterceptor } from '@src/infra/interceptors/log.interceptor';
+import { TransformInterceptor } from '@src/infra/interceptors/transform.interceptor';
 import { JwtStrategy } from '@src/infra/strategies/jwt.passport-strategy';
+import { SharedModule } from '@src/shared/shared.module';
 
+//nest init
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import config, {
   ConfigKeyPaths,
   IRedisConfig,
@@ -23,20 +33,6 @@ import config, {
   securityRegToken,
   throttlerConfigToken,
 } from './config';
-import { SharedModule } from '@src/shared/shared.module';
-import { ThrottlerStorageRedisService } from 'nestjs-throttler-storage-redis';
-import { Redis } from 'ioredis';
-
-import { AllExceptionsFilter } from '@src/infra/filters/all-exceptions.filter';
-import { TransformInterceptor } from '@src/infra/interceptors/transform.interceptor';
-import { LogInterceptor } from '@src/infra/interceptors/log.interceptor';
-import { JwtAuthGuard } from '@src/infra/guards/jwt.auth-guard';
-
-import { ApiModule } from '@src/api/api.module';
-
-//nest init
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 const strategies = [JwtStrategy];
 

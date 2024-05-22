@@ -1,6 +1,7 @@
 import { PaginationResult } from '@src/shared/prisma/pagination';
-import { PageCasbinDomainsQuery } from '../queries/page-casbin-domains.query';
+
 import { CasbinDomainProperties } from '../domain/casbin-domain.read-model';
+import { PageCasbinDomainsQuery } from '../queries/page-casbin-domains.query';
 
 export interface CasbinDomainReadRepoPort {
   pageCasbinDomains(

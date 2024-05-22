@@ -1,14 +1,15 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { PageOperationLogsQueryDto } from '@src/api/log-audit/operation-log/dto/page-operation-log.query-dto';
-import { PaginationResult } from '@src/shared/prisma/pagination';
+import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
 import {
   OperationLogProperties,
   OperationLogReadModel,
 } from '@src/lib/bounded-contexts/log-audit/operation-log/domain/operation-log.read-model';
 import { PageOperationLogsQuery } from '@src/lib/bounded-contexts/log-audit/operation-log/queries/page-operation-logs.query';
-import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
+import { PaginationResult } from '@src/shared/prisma/pagination';
 
 @ApiTags('Operation Log - Module')
 @Controller('operation-log')

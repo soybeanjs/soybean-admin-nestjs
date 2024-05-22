@@ -1,14 +1,15 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { PageCasbinDomainsQueryDto } from '@src/api/iam/dto/page-casbin-domains.query-dto';
-import { PaginationResult } from '@src/shared/prisma/pagination';
+import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
 import {
   CasbinDomainProperties,
   CasbinDomainReadModel,
 } from '@src/lib/bounded-contexts/iam/casbin-domain/domain/casbin-domain.read-model';
 import { PageCasbinDomainsQuery } from '@src/lib/bounded-contexts/iam/casbin-domain/queries/page-casbin-domains.query';
-import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
+import { PaginationResult } from '@src/shared/prisma/pagination';
 
 @ApiTags('Casbin Domain - Module')
 @Controller('casbin-domain')

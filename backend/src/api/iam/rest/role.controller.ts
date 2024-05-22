@@ -1,16 +1,18 @@
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Post, Query, Request } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { PaginationResult } from '@src/shared/prisma/pagination';
-import { PageRolesQueryDto } from '../dto/page-roles.query-dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { RoleCreateDto } from '@src/api/iam/dto/role-create.dto';
+import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
+import { RoleCreateCommand } from '@src/lib/bounded-contexts/iam/role/commands/role-create.command';
 import {
   RoleProperties,
   RoleReadModel,
 } from '@src/lib/bounded-contexts/iam/role/domain/role.read-model';
 import { PageRolesQuery } from '@src/lib/bounded-contexts/iam/role/queries/page-roles.query';
-import { RoleCreateDto } from '@src/api/iam/dto/role-create.dto';
-import { RoleCreateCommand } from '@src/lib/bounded-contexts/iam/role/commands/role-create.command';
-import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
+import { PaginationResult } from '@src/shared/prisma/pagination';
+
+import { PageRolesQueryDto } from '../dto/page-roles.query-dto';
 
 @ApiTags('Role - Module')
 @Controller('role')

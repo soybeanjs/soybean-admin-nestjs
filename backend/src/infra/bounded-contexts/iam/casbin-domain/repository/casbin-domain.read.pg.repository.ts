@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@src/shared/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+
+import { CasbinDomainProperties } from '@src/lib/bounded-contexts/iam/casbin-domain/domain/casbin-domain.read-model';
 import { CasbinDomainReadRepoPort } from '@src/lib/bounded-contexts/iam/casbin-domain/ports/casbin-domain.read.repo-port';
 import { PageCasbinDomainsQuery } from '@src/lib/bounded-contexts/iam/casbin-domain/queries/page-casbin-domains.query';
 import { PaginationResult } from '@src/shared/prisma/pagination';
-import { CasbinDomainProperties } from '@src/lib/bounded-contexts/iam/casbin-domain/domain/casbin-domain.read-model';
-import { Prisma } from '@prisma/client';
+import { PrismaService } from '@src/shared/prisma/prisma.service';
 
 @Injectable()
 export class CasbinDomainReadRepository implements CasbinDomainReadRepoPort {

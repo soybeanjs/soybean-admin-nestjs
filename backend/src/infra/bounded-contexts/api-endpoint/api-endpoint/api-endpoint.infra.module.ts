@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ApiEndpointWriteRepository } from './repository/api-endpoint.write.pg.repository';
-import { ApiEndpointReadRepository } from './repository/api-endpoint.read.pg.repository';
+
+import { ApiEndpointModule } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/api-endpoint.module';
 import {
   ApiEndpointReadRepoPortToken,
   ApiEndpointWriteRepoPortToken,
 } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/constants';
-import { ApiEndpointModule } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/api-endpoint.module';
+
+import { ApiEndpointReadRepository } from './repository/api-endpoint.read.pg.repository';
+import { ApiEndpointWriteRepository } from './repository/api-endpoint.write.pg.repository';
 
 const providers = [
   {

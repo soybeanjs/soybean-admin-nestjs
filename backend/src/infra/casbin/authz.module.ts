@@ -1,12 +1,12 @@
 import { Module, DynamicModule, Global } from '@nestjs/common';
 import * as casbin from 'casbin';
 
-import { AuthZModuleOptions } from './interfaces';
-import { AuthZGuard } from './guards/authz.guard';
 import {
   AUTHZ_MODULE_OPTIONS,
   AUTHZ_ENFORCER,
 } from './constants/authz.constants';
+import { AuthZGuard } from './guards/authz.guard';
+import { AuthZModuleOptions } from './interfaces';
 import { AuthZRBACService, AuthZManagementService } from './services';
 
 @Global()

@@ -1,5 +1,7 @@
 import { IQuery } from '@nestjs/cqrs';
+
 import { PaginationParams } from '@src/shared/prisma/pagination';
+
 export class PageEndpointsQuery extends PaginationParams implements IQuery {
   readonly path?: string;
   readonly method?: string;

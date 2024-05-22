@@ -1,13 +1,15 @@
 import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { PasswordLoginDto } from '../dto/password-login.dto';
-import { AuthenticationService } from '@src/lib/bounded-contexts/iam/authentication/application/service/authentication.service';
-import { PasswordIdentifierDTO } from '@src/lib/bounded-contexts/iam/authentication/application/dto/password-identifier.dto';
-import { Public } from '@src/infra/decorators/public.decorator';
-import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
-import { getClientIpAndPort } from '@src/utils/ip.util';
 import { FastifyRequest } from 'fastify';
+
+import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
+import { Public } from '@src/infra/decorators/public.decorator';
+import { PasswordIdentifierDTO } from '@src/lib/bounded-contexts/iam/authentication/application/dto/password-identifier.dto';
+import { AuthenticationService } from '@src/lib/bounded-contexts/iam/authentication/application/service/authentication.service';
+import { getClientIpAndPort } from '@src/utils/ip.util';
+
+import { PasswordLoginDto } from '../dto/password-login.dto';
 
 @ApiTags('Authentication - Module')
 @Controller('auth')

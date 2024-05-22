@@ -1,9 +1,10 @@
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { FindEndpointsByIdsQuery } from '../../queries/endpoints.by-ids.query';
-import { ApiEndpointReadRepoPortToken } from '../../constants';
-import { ApiEndpointReadRepoPort } from '../../ports/api-endpoint.read.repo-port';
 import { Inject } from '@nestjs/common';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
+import { ApiEndpointReadRepoPortToken } from '../../constants';
 import { EndpointProperties } from '../../domain/endpoint.read-model';
+import { ApiEndpointReadRepoPort } from '../../ports/api-endpoint.read.repo-port';
+import { FindEndpointsByIdsQuery } from '../../queries/endpoints.by-ids.query';
 
 @QueryHandler(FindEndpointsByIdsQuery)
 export class FindEndpointsByIdsQueryHandler

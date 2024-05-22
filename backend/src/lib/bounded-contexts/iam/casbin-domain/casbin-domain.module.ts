@@ -1,4 +1,5 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
+
 import { QueryHandlers } from './application/query-handlers';
 
 @Module({})

@@ -1,9 +1,10 @@
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetDomainByCodeQuery } from '../../queries/domain.by-id.query';
-import { CasbinDomainReadRepoPortToken } from '../../constants';
-import { CasbinDomainReadRepoPort } from '../../ports/casbin-domain.read.repo-port';
 import { Inject } from '@nestjs/common';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
+import { CasbinDomainReadRepoPortToken } from '../../constants';
 import { CasbinDomainProperties } from '../../domain/casbin-domain.read-model';
+import { CasbinDomainReadRepoPort } from '../../ports/casbin-domain.read.repo-port';
+import { GetDomainByCodeQuery } from '../../queries/domain.by-id.query';
 
 @QueryHandler(GetDomainByCodeQuery)
 export class GetDomainByIdQueryHandler

@@ -1,7 +1,8 @@
-import { PaginationParams } from '@src/infra/rest/pagination-params';
 import { ApiProperty } from '@nestjs/swagger';
 import { Status } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+
+import { PaginationParams } from '@src/infra/rest/pagination-params';
 
 export class PageUsersQueryDto extends PaginationParams {
   @ApiProperty({ required: false })
