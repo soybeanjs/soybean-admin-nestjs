@@ -1,14 +1,18 @@
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Post, Query, Request } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { PaginationResult } from '@src/shared/prisma/pagination';
 import { PageRolesQueryDto } from '../dto/page-roles.query-dto';
-import { RoleProperties } from '@src/lib/bounded-contexts/iam/role/domain/role.read-model';
+import {
+  RoleProperties,
+  RoleReadModel,
+} from '@src/lib/bounded-contexts/iam/role/domain/role.read-model';
 import { PageRolesQuery } from '@src/lib/bounded-contexts/iam/role/queries/page-roles.query';
 import { RoleCreateDto } from '@src/api/iam/dto/role-create.dto';
 import { RoleCreateCommand } from '@src/lib/bounded-contexts/iam/role/commands/role-create.command';
+import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
 
-@ApiTags('角色管理模块')
+@ApiTags('Role - Module')
 @Controller('role')
 export class RoleController {
   constructor(
@@ -17,7 +21,10 @@ export class RoleController {
   ) {}
 
   @Get()
-  @ApiQuery({ type: PageRolesQueryDto })
+  @ApiOperation({
+    summary: 'Retrieve Paginated Roles',
+  })
+  @ApiResponseDoc({ type: RoleReadModel, isPaged: true })
   async page(
     @Query() queryDto: PageRolesQueryDto,
   ): Promise<PaginationResult<RoleProperties>> {
@@ -35,7 +42,7 @@ export class RoleController {
   }
 
   @Post()
-  @ApiOperation({ summary: 'Create a new role' })
+  @ApiOperation({ summary: 'Create a New Role' })
   @ApiResponse({
     status: 201,
     description: 'The role has been successfully created.',

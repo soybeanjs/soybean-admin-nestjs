@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { ApiTags } from '@nestjs/swagger';
-import { PasswordLoginDTO } from '../dto/password-login.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { PasswordLoginDto } from '../dto/password-login.dto';
 import { AuthenticationService } from '@src/lib/bounded-contexts/iam/authentication/application/service/authentication.service';
 import { PasswordIdentifierDTO } from '@src/lib/bounded-contexts/iam/authentication/application/dto/password-identifier.dto';
 import { Public } from '@src/infra/decorators/public.decorator';
@@ -9,7 +9,7 @@ import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
 import { getClientIpAndPort } from '@src/utils/ip.util';
 import { FastifyRequest } from 'fastify';
 
-@ApiTags('Auth - 认证模块')
+@ApiTags('Auth - Module')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -19,8 +19,13 @@ export class AuthController {
 
   @Public()
   @Post('login')
+  @ApiOperation({
+    summary: 'Password-based User Authentication',
+    description:
+      'Authenticates a user by verifying provided password credentials and issues a JSON Web Token (JWT) upon successful authentication.',
+  })
   async login(
-    @Body() dto: PasswordLoginDTO,
+    @Body() dto: PasswordLoginDto,
     @Request() request: FastifyRequest,
   ) {
     const { ip, port } = getClientIpAndPort(request);

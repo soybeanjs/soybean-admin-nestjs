@@ -6,7 +6,8 @@ import { RoleReadRepoPort } from '../../ports/role.read.repo-port';
 import { RoleWriteRepoPortToken, RoleReadRepoPortToken } from '../../constants';
 import { Role } from '../../domain/role.model';
 import { Status } from '@prisma/client';
-import { RoleProperties } from '@src/lib/bounded-contexts/iam/role/domain/role.read-model';
+import { RoleProperties } from '../../domain/role.read-model';
+import { ROOT_PID } from '@src/shared/prisma/db.constant';
 
 @CommandHandler(RoleCreateCommand)
 export class RoleCreateHandler
@@ -28,7 +29,7 @@ export class RoleCreateHandler
       );
     }
 
-    if (command.pid !== '-1') {
+    if (command.pid !== ROOT_PID) {
       const parentRole = await this.roleReadRepoPort.getRoleById(command.pid);
 
       if (!parentRole) {

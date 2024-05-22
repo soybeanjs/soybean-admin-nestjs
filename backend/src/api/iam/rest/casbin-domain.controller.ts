@@ -1,18 +1,25 @@
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { PageCasbinDomainsQueryDto } from '@src/api/iam/dto/page-casbin-domains.query-dto';
 import { PaginationResult } from '@src/shared/prisma/pagination';
-import { CasbinDomainProperties } from '@src/lib/bounded-contexts/iam/casbin-domain/domain/casbin-domain.read-model';
+import {
+  CasbinDomainProperties,
+  CasbinDomainReadModel,
+} from '@src/lib/bounded-contexts/iam/casbin-domain/domain/casbin-domain.read-model';
 import { PageCasbinDomainsQuery } from '@src/lib/bounded-contexts/iam/casbin-domain/queries/page-casbin-domains.query';
+import { ApiResponseDoc } from '@src/infra/decorators/api-result.decorator';
 
-@ApiTags('casbin-domain管理模块')
+@ApiTags('Casbin Domain - Module')
 @Controller('casbin-domain')
 export class CasbinDomainController {
   constructor(private queryBus: QueryBus) {}
 
   @Get()
-  @ApiQuery({ type: PageCasbinDomainsQueryDto })
+  @ApiOperation({
+    summary: 'Retrieve Paginated Casbin Domains',
+  })
+  @ApiResponseDoc({ type: CasbinDomainReadModel, isPaged: true })
   async page(
     @Query() queryDto: PageCasbinDomainsQueryDto,
   ): Promise<PaginationResult<CasbinDomainProperties>> {

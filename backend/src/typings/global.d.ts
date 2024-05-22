@@ -18,12 +18,12 @@ declare global {
     data?: T;
   }
 
-  type CreationAuditInfo = Readonly<{
+  type CreationAuditInfoProperties = Readonly<{
     createdAt: Date;
     createdBy: string;
   }>;
 
-  type UpdateAuditInfo = Readonly<{
+  type UpdateAuditInfoProperties = Readonly<{
     updatedAt: Date | null;
     updatedBy: string | null;
   }>;

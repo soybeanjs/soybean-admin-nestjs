@@ -3,7 +3,11 @@ import { IsInt, IsOptional, Max, Min } from 'class-validator';
 import { Expose, Transform } from 'class-transformer';
 
 export class PaginationParams {
-  @ApiProperty({ minimum: 1, default: 1 })
+  @ApiProperty({
+    description: 'Current page number of the pagination',
+    minimum: 1,
+    default: 1,
+  })
   @Min(1)
   @IsInt()
   @Expose()
@@ -13,7 +17,12 @@ export class PaginationParams {
   })
   public readonly current: number;
 
-  @ApiProperty({ minimum: 1, maximum: 100, default: 10 })
+  @ApiProperty({
+    description: 'Number of items per page',
+    minimum: 1,
+    maximum: 100,
+    default: 10,
+  })
   @Min(1)
   @Max(100)
   @IsInt()
