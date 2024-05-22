@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class RoleCreateDto {
   @ApiProperty({ required: true })
@@ -17,6 +18,9 @@ export class RoleCreateDto {
   @IsNotEmpty({ message: 'pid cannot be empty' })
   pid: string;
 
-  @ApiProperty({ type: 'string', required: true, nullable: true })
+  @ApiProperty({ type: 'string', required: false, nullable: true })
+  @IsOptional()
+  @IsString({ message: 'description must be a string or null' })
+  @Type(() => String)
   description: string | null;
 }

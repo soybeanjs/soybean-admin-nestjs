@@ -8,6 +8,7 @@ import { Role } from '../../domain/role.model';
 import { Status } from '@prisma/client';
 import { RoleProperties } from '../../domain/role.read-model';
 import { ROOT_PID } from '@src/shared/prisma/db.constant';
+import { UlidGenerator } from '@src/utils/id.util';
 
 @CommandHandler(RoleCreateCommand)
 export class RoleCreateHandler
@@ -40,7 +41,7 @@ export class RoleCreateHandler
     }
 
     const newRoleProperties: RoleProperties = {
-      id: '2',
+      id: UlidGenerator.generate(),
       code: command.code,
       name: command.name,
       pid: command.pid,
