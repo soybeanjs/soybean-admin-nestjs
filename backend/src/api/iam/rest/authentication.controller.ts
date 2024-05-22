@@ -9,9 +9,9 @@ import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
 import { getClientIpAndPort } from '@src/utils/ip.util';
 import { FastifyRequest } from 'fastify';
 
-@ApiTags('Auth - Module')
+@ApiTags('Authentication - Module')
 @Controller('auth')
-export class AuthController {
+export class AuthenticationController {
   constructor(
     private authenticationService: AuthenticationService,
     private commandBus: CommandBus,

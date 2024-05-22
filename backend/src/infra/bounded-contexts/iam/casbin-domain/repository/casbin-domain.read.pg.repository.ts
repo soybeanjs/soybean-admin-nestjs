@@ -45,4 +45,10 @@ export class CasbinDomainReadRepository implements CasbinDomainReadRepoPort {
       domains,
     );
   }
+
+  async getDomainById(code: string): Promise<CasbinDomainProperties | null> {
+    return this.prisma.sysDomain.findUnique({
+      where: { code },
+    });
+  }
 }

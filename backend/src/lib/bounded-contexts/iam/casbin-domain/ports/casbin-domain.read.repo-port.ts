@@ -6,4 +6,6 @@ export interface CasbinDomainReadRepoPort {
   pageCasbinDomains(
     query: PageCasbinDomainsQuery,
   ): Promise<PaginationResult<CasbinDomainProperties>>;
+
+  getDomainById(code: string): Promise<CasbinDomainProperties | null>;
 }

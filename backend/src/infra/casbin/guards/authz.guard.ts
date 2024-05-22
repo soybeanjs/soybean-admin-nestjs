@@ -41,7 +41,6 @@ export class AuthZGuard implements CanActivate {
         throw new UnauthorizedException();
       }
 
-      await this.enforcer.loadPolicy();
       const userRoles = await RedisUtility.instance.smembers(
         `${CacheConstant.AUTH_TOKEN_PREFIX}${user.uid}`,
       );
