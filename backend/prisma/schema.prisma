@@ -24,7 +24,7 @@ model SysUser {
   avatar      String?
   email       String?   @unique
   phoneNumber String?   @unique @map("phone_number")
-  nikeName    String    @map("nike_name")
+  nickName    String    @map("nick_name")
   status      Status
   createdAt   DateTime  @default(now()) @map("created_at")
   createdBy   String    @map("created_by")

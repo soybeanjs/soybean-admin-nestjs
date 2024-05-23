@@ -18,7 +18,7 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
     avatar: true,
     email: true,
     phoneNumber: true,
-    nikeName: true,
+    nickName: true,
     status: true,
     createdAt: true,
     createdBy: true,
@@ -52,9 +52,9 @@ export class UserReadPostgresRepository implements UserReadRepoPort {
       };
     }
 
-    if (query.nikeName) {
-      where.nikeName = {
-        contains: query.nikeName,
+    if (query.nickName) {
+      where.nickName = {
+        contains: query.nickName,
       };
     }
 

@@ -15,7 +15,7 @@ export class PageUsersQueryDto extends PaginationParams {
   @IsOptional()
   @IsString({ message: 'Nickname must be a string' })
   @IsNotEmpty({ message: 'Nickname cannot be empty' })
-  nikeName?: string;
+  nickName?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()

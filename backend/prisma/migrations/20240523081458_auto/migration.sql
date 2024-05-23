@@ -11,7 +11,7 @@ CREATE TABLE "sys_user" (
     "avatar" TEXT,
     "email" TEXT,
     "phone_number" TEXT,
-    "nike_name" TEXT NOT NULL,
+    "nick_name" TEXT NOT NULL,
     "status" "Status" NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "created_by" TEXT NOT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE "sys_login_log" (
     "ip" TEXT NOT NULL,
     "port" INTEGER,
     "address" TEXT NOT NULL,
-    "mouser_agentdule_name" TEXT NOT NULL,
+    "user_agent" TEXT NOT NULL,
     "request_id" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -143,6 +143,7 @@ CREATE TABLE "sys_operation_log" (
     "start_time" TIMESTAMP(3) NOT NULL,
     "end_time" TIMESTAMP(3) NOT NULL,
     "duration" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "sys_operation_log_pkey" PRIMARY KEY ("id")
 );

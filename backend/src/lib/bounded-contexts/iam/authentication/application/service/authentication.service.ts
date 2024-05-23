@@ -27,7 +27,7 @@ export class AuthenticationService {
 
   async execPasswordLogin(
     dto: PasswordIdentifierDTO,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  ): Promise<{ token: string; refreshToken: string }> {
     const { identifier, password } = dto;
     const user = await this.repository.findUserByIdentifier(identifier);
     if (!user) {
@@ -69,7 +69,7 @@ export class AuthenticationService {
     userId: string,
     username: string,
     domain: string,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  ): Promise<{ token: string; refreshToken: string }> {
     const payload: IAuthentication = {
       uid: userId,
       username: username,
@@ -81,6 +81,6 @@ export class AuthenticationService {
       expiresIn: this.securityConfig.refreshJwtExpiresIn,
     });
 
-    return { accessToken, refreshToken };
+    return { token: accessToken, refreshToken };
   }
 }

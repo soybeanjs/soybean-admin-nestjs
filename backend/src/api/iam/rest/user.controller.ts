@@ -29,7 +29,7 @@ export class UserController {
       current: queryDto.current,
       size: queryDto.size,
       username: queryDto.username,
-      nikeName: queryDto.nikeName,
+      nickName: queryDto.nickName,
       status: queryDto.status,
     });
     return this.queryBus.execute<

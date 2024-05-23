@@ -8,7 +8,7 @@ export type UserEssentialProperties = Readonly<
     id: string;
     username: string;
     domain: string;
-    nikeName: string;
+    nickName: string;
     status: Status;
   }> &
     CreationAuditInfoProperties &
@@ -38,7 +38,7 @@ export class UserReadModel extends UpdateAuditInfo {
   domain: string;
 
   @ApiProperty({ description: 'Nickname of the user' })
-  nikeName: string;
+  nickName: string;
 
   @ApiProperty({
     description: 'Current status of the user',

@@ -3,10 +3,12 @@ import { CommandBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FastifyRequest } from 'fastify';
 
+import { CacheConstant } from '@src/constants/cache.constant';
 import { USER_AGENT, X_REQUEST_ID } from '@src/constants/rest.constant';
 import { Public } from '@src/infra/decorators/public.decorator';
 import { PasswordIdentifierDTO } from '@src/lib/bounded-contexts/iam/authentication/application/dto/password-identifier.dto';
 import { AuthenticationService } from '@src/lib/bounded-contexts/iam/authentication/application/service/authentication.service';
+import { RedisUtility } from '@src/shared/redis/services/redis.util';
 import { getClientIpAndPort } from '@src/utils/ip.util';
 
 import { PasswordLoginDto } from '../dto/password-login.dto';
@@ -48,8 +50,16 @@ export class AuthenticationController {
     return result;
   }
 
-  @Get('profile')
-  async getProfile(@Request() req: any): Promise<IAuthentication> {
-    return req.user;
+  @Get('getUserInfo')
+  async getProfile(@Request() req: any) {
+    const user: IAuthentication = req.user;
+    const userRoles = await RedisUtility.instance.smembers(
+      `${CacheConstant.AUTH_TOKEN_PREFIX}${user.uid}`,
+    );
+    return {
+      userId: user.uid,
+      userName: user.username,
+      roles: userRoles,
+    };
   }
 }
