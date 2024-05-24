@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export const ROOT_PID = '-1';
+export const ROOT_PID = '0';
 
 export class CreationAuditInfo {
   @ApiProperty({ description: 'Created by user ID' })

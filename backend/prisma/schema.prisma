@@ -86,8 +86,8 @@ model SysRole {
 }
 
 model SysUserRole {
-  userId String
-  roleId String
+  userId String @map("user_id")
+  roleId String @map("role_id")
 
   @@id([userId, roleId])
   @@map("sys_user_role")
@@ -163,4 +163,48 @@ model SysOperationLog {
   createdAt   DateTime @default(now()) @map("created_at")
 
   @@map("sys_operation_log")
+}
+
+enum MenuType {
+  directory
+  menu
+}
+
+model SysMenu {
+  id        Int      @id @default(autoincrement())
+  menuType  MenuType @map("menu_type")
+  menuName  String   @map("menu_name") @db.VarChar(64)
+  iconType  Int?     @default(1) @map("icon_type")
+  icon      String?  @map("icon") @db.VarChar(64)
+  routeName String   @unique @map("route_name") @db.VarChar(64)
+  routePath String   @map("route_path") @db.VarChar(128)
+  component String   @map("component") @db.VarChar(64)
+  pathParam String?  @map("path_param") @db.VarChar(64)
+  status    Status
+
+  activeMenu String?  @map("active_menu") @db.VarChar(64)
+  hideInMenu Boolean? @default(false) @map("hide_in_menu")
+  pid        String   @default("0")
+  order      Int      @map("sequence")
+  i18nKey    String?  @map("i18n_key") @db.VarChar(64)
+  keepAlive  Boolean? @default(false) @map("keep_alive")
+  constant   Boolean  @default(false)
+  href       String?  @map("href") @db.VarChar(64)
+  multiTab   Boolean? @default(false) @map("multi_tab")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String    @map("created_by")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  updatedBy String?   @map("updated_by")
+
+  @@map("sys_menu")
+}
+
+model SysRoleMenu {
+  roleId String @map("role_id")
+  menuId Int    @map("menu_id")
+  domain String
+
+  @@id([roleId, menuId, domain])
+  @@map("sys_role_menu")
 }

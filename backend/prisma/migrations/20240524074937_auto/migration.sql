@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "Status" AS ENUM ('ENABLED', 'DISABLED', 'BANNED');
 
+-- CreateEnum
+CREATE TYPE "MenuType" AS ENUM ('directory', 'menu');
+
 -- CreateTable
 CREATE TABLE "sys_user" (
     "id" TEXT NOT NULL,
@@ -68,10 +71,10 @@ CREATE TABLE "sys_role" (
 
 -- CreateTable
 CREATE TABLE "sys_user_role" (
-    "userId" TEXT NOT NULL,
-    "roleId" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "role_id" TEXT NOT NULL,
 
-    CONSTRAINT "sys_user_role_pkey" PRIMARY KEY ("userId","roleId")
+    CONSTRAINT "sys_user_role_pkey" PRIMARY KEY ("user_id","role_id")
 );
 
 -- CreateTable
@@ -148,6 +151,44 @@ CREATE TABLE "sys_operation_log" (
     CONSTRAINT "sys_operation_log_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "sys_menu" (
+    "id" SERIAL NOT NULL,
+    "menu_type" "MenuType" NOT NULL,
+    "menu_name" VARCHAR(64) NOT NULL,
+    "icon_type" INTEGER DEFAULT 1,
+    "icon" VARCHAR(64),
+    "route_name" VARCHAR(64) NOT NULL,
+    "route_path" VARCHAR(128) NOT NULL,
+    "component" VARCHAR(64) NOT NULL,
+    "path_param" VARCHAR(64),
+    "status" "Status" NOT NULL,
+    "active_menu" VARCHAR(64),
+    "hide_in_menu" BOOLEAN DEFAULT false,
+    "pid" TEXT NOT NULL DEFAULT '0',
+    "sequence" INTEGER NOT NULL,
+    "i18n_key" VARCHAR(64),
+    "keep_alive" BOOLEAN DEFAULT false,
+    "constant" BOOLEAN NOT NULL DEFAULT false,
+    "href" VARCHAR(64),
+    "multi_tab" BOOLEAN DEFAULT false,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_by" TEXT NOT NULL,
+    "updated_at" TIMESTAMP(3),
+    "updated_by" TEXT,
+
+    CONSTRAINT "sys_menu_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "sys_role_menu" (
+    "role_id" TEXT NOT NULL,
+    "menu_id" INTEGER NOT NULL,
+    "domain" TEXT NOT NULL,
+
+    CONSTRAINT "sys_role_menu_pkey" PRIMARY KEY ("role_id","menu_id","domain")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "sys_user_username_key" ON "sys_user"("username");
 
@@ -165,3 +206,6 @@ CREATE UNIQUE INDEX "sys_role_code_key" ON "sys_role"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "sys_organization_code_key" ON "sys_organization"("code");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sys_menu_route_name_key" ON "sys_menu"("route_name");
