@@ -19,6 +19,7 @@ import {
 } from '@src/constants/rest.constant';
 import { Permission, PERMISSIONS_METADATA } from '@src/infra/casbin';
 import { ApiEndpoint } from '@src/lib/bounded-contexts/api-endpoint/api-endpoint/domain/api-endpoint.model';
+import { isMainCluster } from '@src/utils/env';
 
 @Injectable()
 export class ApiDataService implements OnModuleInit {
@@ -31,72 +32,74 @@ export class ApiDataService implements OnModuleInit {
   private readonly logger = new Logger(ApiDataService.name);
 
   onModuleInit() {
-    const endpoints: ApiEndpoint[] = [];
-    this.modulesContainer.forEach((module: Module) => {
-      const controllers = Array.from(module.controllers.values());
-      controllers.forEach((controller) => {
-        const instance: Record<string, any> = controller.instance;
-        if (!instance) return;
+    if (isMainCluster) {
+      const endpoints: ApiEndpoint[] = [];
+      this.modulesContainer.forEach((module: Module) => {
+        const controllers = Array.from(module.controllers.values());
+        controllers.forEach((controller) => {
+          const instance: Record<string, any> = controller.instance;
+          if (!instance) return;
 
-        const prototype = Object.getPrototypeOf(instance);
-        const controllerName = controller.metatype.name;
-        const controllerPath =
-          Reflect.getMetadata(PATH, controller.metatype) || '';
+          const prototype = Object.getPrototypeOf(instance);
+          const controllerName = controller.metatype.name;
+          const controllerPath =
+            Reflect.getMetadata(PATH, controller.metatype) || '';
 
-        Object.getOwnPropertyNames(prototype)
-          .filter((method) => typeof instance[method] === FUNCTION)
-          .forEach((method) => {
-            const methodPath =
-              Reflect.getMetadata(PATH, instance[method]) || '';
-            const methodType = Reflect.getMetadata(METHOD, instance[method]);
-            if (methodType === undefined) return;
+          Object.getOwnPropertyNames(prototype)
+            .filter((method) => typeof instance[method] === FUNCTION)
+            .forEach((method) => {
+              const methodPath =
+                Reflect.getMetadata(PATH, instance[method]) || '';
+              const methodType = Reflect.getMetadata(METHOD, instance[method]);
+              if (methodType === undefined) return;
 
-            const permissions: Permission[] = this.reflector.get(
-              PERMISSIONS_METADATA,
-              instance[method],
-            ) || [{ action: '', resource: '' }];
-            const fullPath =
-              controllerPath + (methodPath ? '/' + methodPath : '');
-            const cleanedPath = fullPath
-              .replace(/\/+/g, '/')
-              .replace(/\/$/, '');
-            const summary =
-              Reflect.getMetadata(SWAGGER_API_OPERATION, instance[method])
-                ?.summary || '';
+              const permissions: Permission[] = this.reflector.get(
+                PERMISSIONS_METADATA,
+                instance[method],
+              ) || [{ action: '', resource: '' }];
+              const fullPath =
+                controllerPath + (methodPath ? '/' + methodPath : '');
+              const cleanedPath = fullPath
+                .replace(/\/+/g, '/')
+                .replace(/\/$/, '');
+              const summary =
+                Reflect.getMetadata(SWAGGER_API_OPERATION, instance[method])
+                  ?.summary || '';
 
-            permissions.forEach((permission) => {
-              const action = permission.action;
-              const resource = permission.resource;
-              const id = crypto
-                .createHash('md5')
-                .update(
-                  JSON.stringify({
+              permissions.forEach((permission) => {
+                const action = permission.action;
+                const resource = permission.resource;
+                const id = crypto
+                  .createHash('md5')
+                  .update(
+                    JSON.stringify({
+                      action,
+                      resource,
+                      path: cleanedPath,
+                      method: RequestMethod[methodType],
+                    }),
+                  )
+                  .digest('hex');
+
+                endpoints.push(
+                  new ApiEndpoint(
+                    id,
+                    cleanedPath,
+                    RequestMethod[methodType],
                     action,
                     resource,
-                    path: cleanedPath,
-                    method: RequestMethod[methodType],
-                  }),
-                )
-                .digest('hex');
-
-              endpoints.push(
-                new ApiEndpoint(
-                  id,
-                  cleanedPath,
-                  RequestMethod[methodType],
-                  action,
-                  resource,
-                  controllerName,
-                  summary,
-                ),
-              );
+                    controllerName,
+                    summary,
+                  ),
+                );
+              });
             });
-          });
+        });
       });
-    });
 
-    setImmediate(() => {
-      this.eventEmitter.emit(API_ENDPOINT, endpoints);
-    });
+      setImmediate(() => {
+        this.eventEmitter.emit(API_ENDPOINT, endpoints);
+      });
+    }
   }
 }
