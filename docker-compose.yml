@@ -59,7 +59,7 @@ services:
       POSTGRES_USER: soybean
       POSTGRES_DB: soybean-admin-nest-backend
     ports:
-      - '35433:5432'
+      - '25432:5432'
     volumes:
       - soybean-admin-postgres_data:/usr/share/docker/postgresql
       - ./deploy/postgres:/docker-entrypoint-initdb.d
@@ -77,7 +77,7 @@ services:
       TZ: Asia/Shanghai
     command: redis-server --requirepass 123456
     ports:
-      - '36378:6379'
+      - '26379:6379'
     volumes:
       - soybean-admin-redis_data:/data
     networks:
